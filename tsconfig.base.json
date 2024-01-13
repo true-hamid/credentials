@@ -15,8 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@localization": ["packages/localization/src/index.ts"],
       "@credentials/native-ui": ["packages/native-ui/src/index.ts"],
+      "@localization": ["packages/localization/src/index.ts"],
       "@mobile/core": ["apps/mobile/src/core/index.ts"]
     }
   },
