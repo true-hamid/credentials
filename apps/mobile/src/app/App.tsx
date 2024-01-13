@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
+import {Button} from '@credentials/native-ui';
 import Svg, { G, Path } from 'react-native-svg';
 
 export const App = () => {
@@ -28,6 +29,7 @@ export const App = () => {
           style={styles.scrollView}
         >
           <View style={styles.section}>
+          <Button disabled={false} title='Hamid' />
             <Text style={styles.textLg}>Hello there,</Text>
             <Text style={[styles.textXL, styles.appTitleText]} testID="heading">
               Welcome AppsMobile 👋
