@@ -1,5 +1,6 @@
 package com.appsmobile;
 
+import android.os.Bundle; // required by react-native-screens, see https://reactnavigation.org/docs/getting-started/
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
