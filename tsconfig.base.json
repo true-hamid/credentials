@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@credentials/native-ui": ["packages/native-ui/src/index.ts"]
+      "@credentials/native-ui": ["packages/native-ui/src/index.ts"],
+      "@mobile/core": ["apps/mobile/src/core/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
