@@ -4,7 +4,8 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  Delete this file and get started with your project!
  * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- */
+ */import {i18n} from '@localization';
+
 export function NxWelcome({ title }: { title: string }) {
   return (
     <>
@@ -427,8 +428,7 @@ export function NxWelcome({ title }: { title: string }) {
         <div className="container">
           <div id="welcome">
             <h1>
-              <span> Hello there, </span>
-              Welcome {title} 👋
+             {i18n.t('welcomeTitles')}
             </h1>
           </div>
 

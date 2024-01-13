@@ -1159,7 +1159,7 @@
   resolved "https://registry.yarnpkg.com/@babel/regjsgen/-/regjsgen-0.8.0.tgz#f0ba69b075e1f05fb2825b7fad991e7adbb18310"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.20.7", "@babel/runtime@^7.22.5", "@babel/runtime@^7.22.6", "@babel/runtime@^7.23.2", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.20.7", "@babel/runtime@^7.22.5", "@babel/runtime@^7.22.6", "@babel/runtime@^7.23.2", "@babel/runtime@^7.23.4", "@babel/runtime@^7.23.6", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
   version "7.23.8"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.8.tgz#8ee6fe1ac47add7122902f257b8ddf55c898f650"
   integrity sha512-Y7KbAP984rn1VGMbGqKmBLio9V7y5Je9GvU4rQPCPinCyNfUcToxIXl06d59URp/F3LwinvODxab5N/G6qggkw==
@@ -1400,6 +1400,26 @@
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@flatten-js/interval-tree/-/interval-tree-1.1.2.tgz#fcc891da48bc230392884be01c26fe8c625702e8"
   integrity sha512-OwLoV9E/XM6b7bes2rSFnGNjyRy7vcoIHFTnmBR2WAaZTf0Fe4EX4GdA65vU1KgFAasti7iRSg2dZfYd1Zt00Q==
+
+"@floating-ui/core@^1.5.3":
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.5.3.tgz#b6aa0827708d70971c8679a16cf680a515b8a52a"
+  integrity sha512-O0WKDOo0yhJuugCx6trZQj5jVJ9yR0ystG2JaNAemYUWce+pmM6WUEFIibnWyEJKdrDxhm75NoSRME35FNaM/Q==
+  dependencies:
+    "@floating-ui/utils" "^0.2.0"
+
+"@floating-ui/dom@^1.5.3":
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-1.5.4.tgz#28df1e1cb373884224a463235c218dcbd81a16bb"
+  integrity sha512-jByEsHIY+eEdCjnTVu+E3ephzTOzkQ8hgUfGwos+bg7NlH33Zc5uO+QHz1mrQUOgIKKDD1RtS201P9NvAfq3XQ==
+  dependencies:
+    "@floating-ui/core" "^1.5.3"
+    "@floating-ui/utils" "^0.2.0"
+
+"@floating-ui/utils@^0.2.0":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.1.tgz#16308cea045f0fc777b6ff20a9f25474dd8293d2"
+  integrity sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==
 
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
@@ -4902,6 +4922,13 @@ create-require@^1.1.0:
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
 
+cross-fetch@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-4.0.0.tgz#f037aef1580bb3a1a35164ea2a848ba81b445983"
+  integrity sha512-e4a5N8lVvuLgAWgnCrLr2PP0YyDOTHa9H/Rj54dirp61qXnNq46m82bRhNqIA5VccJtWBvPTFRV3TtvHUKPB1g==
+  dependencies:
+    node-fetch "^2.6.12"
+
 cross-spawn@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-4.0.2.tgz#7b9247621c23adfdd3856004a823cbe397424d41"
@@ -7079,6 +7106,20 @@ human-signals@^2.1.0:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
 
+i18next-locize-backend@^6.4.1:
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/i18next-locize-backend/-/i18next-locize-backend-6.4.1.tgz#eca46e6afeeb8a484efba15575022dae492b6508"
+  integrity sha512-D8XxklzzsftydwEKxEa5y9Hz5TMxY5Z68ciwMyIhB/g/vAGW4x8ZW5u27guCppWH+pAzdIYkT8E47lfjcBak6w==
+  dependencies:
+    cross-fetch "4.0.0"
+
+i18next-subliminal@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/i18next-subliminal/-/i18next-subliminal-1.0.0.tgz#d7cc92578aab3a3ffeb444e2b1024c91cfda53c1"
+  integrity sha512-xL/3cfp3q1Fh0GTXCM93X+8Jg0LAeOCv8T4d/w2Qa22StYv2VqagJTMo73q83B9YJ43I5yd1bBb4nT+rt+Z85w==
+  dependencies:
+    "@babel/runtime" "^7.23.4"
+
 i18next@^23.7.16:
   version "23.7.16"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-23.7.16.tgz#7026d18b7a3ac9e2ecfeb78da5e4da5ca33312ef"
@@ -8405,6 +8446,15 @@ locate-path@^7.1.0:
   dependencies:
     p-locate "^6.0.0"
 
+locize@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/locize/-/locize-3.2.2.tgz#05394ef612d2536a19087a84dd6d16af1b1bd661"
+  integrity sha512-h7uJN+B+GDK88+GiQERS1x1h/OubnxiXsjYDlP8Yy62A07qGzU++2aWUglnKoYV6+ZohbOMRG6s1EzseDjIJ7g==
+  dependencies:
+    "@babel/runtime" "^7.23.6"
+    "@floating-ui/dom" "^1.5.3"
+    i18next-subliminal "^1.0.0"
+
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
@@ -9091,7 +9141,7 @@ node-dir@^0.1.17:
   dependencies:
     minimatch "^3.0.2"
 
-node-fetch@^2.2.0, node-fetch@^2.6.0, node-fetch@^2.6.7:
+node-fetch@^2.2.0, node-fetch@^2.6.0, node-fetch@^2.6.12, node-fetch@^2.6.7:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
   integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==

@@ -1,13 +1,11 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.css';
-
 import NxWelcome from './nx-welcome';
+import PreLaunch from './preLaunch/preLaunch';
 
 export function App() {
   return (
-    <div>
+    <PreLaunch>
       <NxWelcome title="web" />
-    </div>
+    </PreLaunch>
   );
 }
 
