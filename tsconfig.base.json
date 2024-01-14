@@ -16,8 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@credentials/native-ui": ["packages/native-ui/src/index.ts"],
-      "@localization/init": ["packages/localization/src/i18next.ts"],
+      "@theme": ["packages/theme/src/index.ts"],
       "@localization": ["packages/localization/src/index.ts"],
+      "@localization/init": ["packages/localization/src/i18next.ts"],
       "@mobile/core": ["apps/mobile/src/core/index.ts"]
     }
   },
