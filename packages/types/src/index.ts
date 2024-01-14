@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { ViewProps } from 'react-native';
 
 export interface ProviderProps {
   children: ReactNode;
@@ -20,3 +21,31 @@ export enum USER_COUNTRY {
   SD = 'SD',
   IN = 'IN',
 }
+
+export enum LoginFormFields {
+  USERNAME = 'username',
+  PASSWORD = 'password',
+}
+
+export enum PasswordFormFields {
+  COUNTRY = 'country',
+  NAME = 'name',
+  USERNAME = 'username',
+  PHONE_NUMBER = 'phoneNumber',
+  PASSWORD = 'password',
+  CONFIRM_PASSWORD = 'confirmPassword',
+}
+
+export type Size = 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl' | 'xxxl';
+
+export type SpacerProps = ViewProps & {
+  /**
+   * `size` for the spacer
+   */
+  size: Size;
+
+  /**
+   * `vertical` default type, sets the vertical spacing
+   */
+  vertical?: boolean;
+};

@@ -13,12 +13,12 @@ export const getTheme = (userCountry?: USER_COUNTRY) => {
 
   switch (selectedTheme) {
     case USER_COUNTRY.AE:
-      return { ...THEMEPALETTES.AE };
+      return THEMEPALETTES.AE;
     case USER_COUNTRY.SD:
-      return { ...THEMEPALETTES.SD };
+      return THEMEPALETTES.SD;
     case USER_COUNTRY.IN:
-      return { ...THEMEPALETTES.IN };
+      return THEMEPALETTES.IN;
     default:
-      return { ...THEMEPALETTES.DEFAULT };
+      return THEMEPALETTES.DEFAULT;
   }
 };

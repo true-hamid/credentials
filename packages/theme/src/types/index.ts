@@ -3,5 +3,5 @@ import {ThemeParams} from '@types';
 
 export interface ProviderProps {
   children: ReactNode;
-  value: ThemeParams;
+  value?: ThemeParams;
 }

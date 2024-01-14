@@ -1,6 +1,8 @@
 import React, { ReactNode, Suspense } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from '@localization';
+import { ThemeProvider } from '@theme';
+
 type PreLaunchProps = {
   children?: ReactNode[] | ReactNode;
 };
@@ -20,7 +22,8 @@ const PRE_LAUNCH: React.FC<PreLaunchProps> = ({ children }) => {
   if (!isTranslationReady) {
     return null;
   } else {
-    return children;
+    // TODO: set theme later
+    return <ThemeProvider>{children}</ThemeProvider>;
   }
 };
 

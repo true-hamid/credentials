@@ -17,6 +17,10 @@
     "react-native-svg-transformer": "*",
     "i18next": "*",
     "react-i18next": "*",
-    "i18next-locize-backend": "*"
+    "i18next-locize-backend": "*",
+    "react-native-paper": "*",
+    "react-hook-form": "*",
+    "yup": "*",
+    "@hookform/resolvers": "*"
   }
 }
