@@ -15,9 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@form-validations": [
-        "packages/form-validations/src/index.ts"
-      ],
+      "@form-validations": ["packages/form-validations/src/index.ts"],
       "@localization": ["packages/localization/src/index.ts"],
       "@localization/init": ["packages/localization/src/i18next.ts"],
       "@mobile/core": ["apps/mobile/src/core/index.ts"],
