@@ -1,22 +1,7 @@
 import { ReactNode } from 'react';
+import {ThemeParams} from '@types';
 
 export interface ProviderProps {
   children: ReactNode;
   value: ThemeParams;
-}
-
-export interface ThemeParams {
-  userCountry: USER_COUNTRY;
-}
-
-export enum LANGUAGE {
-  enUS = 'en-US',
-  arSD = 'ar-SD',
-  arAE = 'ar-AE',
-}
-
-export enum USER_COUNTRY {
-  AE = 'AE',
-  SD = 'SD',
-  IN = 'IN',
 }

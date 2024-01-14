@@ -1,5 +1,5 @@
 import THEMEPALETTES from '../palette';
-import { USER_COUNTRY } from '../types';
+import { USER_COUNTRY } from '@types';
 
 const themeMapping = {
   [USER_COUNTRY.AE]: USER_COUNTRY.AE,
