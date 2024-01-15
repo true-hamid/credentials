@@ -1,10 +1,10 @@
-import NxWelcome from './nx-welcome';
 import PreLaunch from './preLaunch/preLaunch';
+import SignIn from './sign-in';
 
 export function App() {
   return (
     <PreLaunch>
-      <NxWelcome title="web" />
+      <SignIn />
     </PreLaunch>
   );
 }
