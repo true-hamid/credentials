@@ -17,8 +17,8 @@ export class AuthController {
   async signIn(@Request() request: {user: User}) {
     return {
       message: 'User authenticated',
-      user: request.user.username,
       token: this.authService.getTokenForUser(request.user),
+      // country: request.user.country,
     };
   }
 

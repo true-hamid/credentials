@@ -15,6 +15,7 @@ import { useAppTheme } from '@theme';
 import { useSignInForm } from '@form-validations';
 import { API_METHODS, LoginFormFields } from '@types';
 import { useAPIRequest } from '@network';
+import { useGlobalStore } from '@global-store';
 
 type AuthResponse = { pbk: ''; randomId: '' };
 
@@ -32,7 +33,11 @@ export default function SignIn() {
     loading: signInLoading,
     error: signInError,
     data: signInData,
-  } = useAPIRequest({ url: '/auth/signIn', method: API_METHODS.POST });
+  } = useAPIRequest<{ token: string }>({
+    url: '/auth/signIn',
+    method: API_METHODS.POST,
+  });
+  const { setAuthToken } = useGlobalStore();
 
   useEffect(() => {
     if (authData?.pbk) {
@@ -54,6 +59,9 @@ export default function SignIn() {
   }, [authData?.pbk, authData?.randomId]);
 
   useEffect(() => {
+    if (signInData?.token) {
+      setAuthToken(signInData?.token);
+    }
     console.log('signInData', signInData);
     console.log('signInError', signInError);
     console.log('signInLoading', signInLoading);

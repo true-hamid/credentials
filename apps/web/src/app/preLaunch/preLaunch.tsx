@@ -2,6 +2,7 @@ import { useTranslation } from '@localization';
 import { ReactNode, Suspense } from 'react';
 import { ThemeProvider } from '@web-ui';
 import { NetworkProvider } from '@network';
+import { GlobalStoreProvider } from '@global-store';
 
 type PreLaunchProps = {
   children?: ReactNode[] | ReactNode;
@@ -11,7 +12,9 @@ const PreLaunch: React.FC<PreLaunchProps> = ({ children }) => {
   return (
     // TODO: Add a loading screen
     <Suspense fallback={<p>Wait...</p>}>
-      <PRE_LAUNCH>{children}</PRE_LAUNCH>
+      <GlobalStoreProvider>
+        <PRE_LAUNCH>{children}</PRE_LAUNCH>
+      </GlobalStoreProvider>
     </Suspense>
   );
 };
@@ -24,7 +27,9 @@ const PRE_LAUNCH: React.FC<PreLaunchProps> = ({ children }) => {
   } else {
     return (
       <ThemeProvider>
-        <NetworkProvider value={{baseURL: 'api/'}}>{children}</NetworkProvider>
+        <NetworkProvider value={{ baseURL: 'api/' }}>
+          {children}
+        </NetworkProvider>
       </ThemeProvider>
     );
   }
