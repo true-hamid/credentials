@@ -1,7 +1,7 @@
 import React, { ReactNode, Suspense } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from '@localization';
-import { ThemeProvider } from '@theme';
+import { ThemeProvider } from '@native-ui';
 import initializei18next from '@localization/init';
 import { GlobalStoreProvider } from '@global-store';
 import { NetworkProvider } from '@network';
