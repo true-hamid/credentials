@@ -1,6 +1,6 @@
 import { TFunction } from 'i18next';
 import * as yup from 'yup';
-import { LoginFormFields } from '@types';
+import { SignInFormFields } from '@types';
 
 import { RegularExperessions } from './regex';
 import { getValidationSchemaFunc } from './utils';
@@ -12,12 +12,12 @@ type GetFormValidationsParams = {
 
 // TODO: use in signup form
 // const countrySpecificValidations = (
-//   field: LoginFormFields | PasswordFormFields,
+//   field: SignInFormFields | PasswordFormFields,
 //   country: string
 // ) => {
-//   if (field === LoginFormFields.USERNAME) {
-//     switch (LoginFormFields.USERNAME + country) {
-//       case LoginFormFields.USERNAME + USER_COUNTRY.AE:
+//   if (field === SignInFormFields.USERNAME) {
+//     switch (SignInFormFields.USERNAME + country) {
+//       case SignInFormFields.USERNAME + USER_COUNTRY.AE:
 
 //       // default:
 //       //     break;
@@ -34,14 +34,14 @@ export const getFormValidations = (
   } = params;
 
   const validation = {
-    [LoginFormFields.USERNAME]: yup
+    [SignInFormFields.USERNAME]: yup
       .string()
       .required()
       .matches(
         new RegExp(RegularExperessions.BASIC_USERNAME),
         t('pleaseEnterValidUsername')
       ),
-    [LoginFormFields.PASSWORD]: yup.string().required(),
+    [SignInFormFields.PASSWORD]: yup.string().required(),
     // [ValidationSchemaKeys.IBAN]: yup
     //   .string()
     //   .required(getServicesTranslation(t, 'creditLimitIncrease.ibanEmptyError'))

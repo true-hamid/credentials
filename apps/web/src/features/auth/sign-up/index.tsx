@@ -11,7 +11,7 @@ import {
 } from '@web-ui';
 import { i18n } from '@localization';
 import { useAppTheme } from '@theme';
-import { LoginFormFields } from '@types';
+import { SignInFormFields } from '@types';
 import { useSignInApi, useSignInForm, useSignInData } from '@features/auth';
 import { getEncrypted } from '../utils';
 
@@ -64,19 +64,19 @@ export default function SignUp() {
             sx={{ mt: 1 }}
           >
             <ControlledTextField
-              name={LoginFormFields.USERNAME}
+              name={SignInFormFields.USERNAME}
               control={control}
               // @ts-expect-error we are not in the type definition business
-              errorMessage={errors?.[LoginFormFields.USERNAME]?.message}
+              errorMessage={errors?.[SignInFormFields.USERNAME]?.message}
               label={i18n.t('username')}
               value={'hamidab'}
               helperTextType={'error'}
             />
             <ControlledTextField
-              name={LoginFormFields.PASSWORD}
+              name={SignInFormFields.PASSWORD}
               control={control}
               // @ts-expect-error we are not in the type definition business
-              errorMessage={errors?.[LoginFormFields.PASSWORD]?.message}
+              errorMessage={errors?.[SignInFormFields.PASSWORD]?.message}
               label={i18n.t('password')}
               helperTextType={'error'}
               type="password"

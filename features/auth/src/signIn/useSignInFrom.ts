@@ -1,5 +1,5 @@
 import { i18n } from '@localization';
-import { LoginFormFields } from '@types';
+import { SignInFormFields } from '@types';
 import { getFormValidations, useDynamicForm } from '@form-validations';
 
 export const useSignInForm = () => {
@@ -11,8 +11,8 @@ export const useSignInForm = () => {
       mode: 'onChange',
       reValidateMode: 'onChange',
       schema: validationSchema([
-        LoginFormFields.USERNAME,
-        LoginFormFields.PASSWORD,
+        SignInFormFields.USERNAME,
+        SignInFormFields.PASSWORD,
       ]),
     });
 

@@ -22,7 +22,7 @@ export enum USER_COUNTRY {
   IN = 'IN',
 }
 
-export enum LoginFormFields {
+export enum SignInFormFields {
   USERNAME = 'username',
   PASSWORD = 'password',
 }
