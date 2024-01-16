@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Text, TextInput, Button, Container, Form } from '@native-ui';
+import { StyleSheet } from 'react-native';
+import { Text, Button, Container, Form } from '@native-ui';
 import { i18n } from '@localization';
 import { Spacer } from 'packages/native-ui/src/atoms';
 import { LoginFormFields } from '@types';
@@ -44,7 +44,12 @@ const SignInScreen = () => {
             secureTextEntry
           />
           <Spacer size={'l'} />
-          <Button disabled={!isValidForm} mode="contained" onPress={handleSubmit(handleSignIn)} style={styles.button}>
+          <Button
+            disabled={!isValidForm}
+            mode="contained"
+            onPress={handleSubmit(handleSignIn)}
+            style={styles.button}
+          >
             {i18n.t('signIn')}
           </Button>
           <Spacer size={'m'} />

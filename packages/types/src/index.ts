@@ -1,13 +1,13 @@
 import { ReactNode } from 'react';
 import { ViewProps } from 'react-native';
 
-export interface ProviderProps {
+export interface ThemeProviderProps {
   children: ReactNode;
-  value: ThemeParams;
+  value?: ThemeParams;
 }
 
 export interface ThemeParams {
-  userCountry: USER_COUNTRY;
+  userCountry?: USER_COUNTRY;
 }
 
 export enum LANGUAGE {

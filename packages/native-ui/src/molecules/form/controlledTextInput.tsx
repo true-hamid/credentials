@@ -1,6 +1,5 @@
 import { TextInputProps } from 'react-native-paper';
-import { Controller, FieldError, UseControllerProps } from 'react-hook-form';
-import { useShowHideMessage } from '@utils';
+import { Controller, UseControllerProps } from 'react-hook-form';
 
 import { TextInput, HelperText } from '../../atoms';
 

@@ -1,5 +1,6 @@
 import { useTranslation } from "@localization";
 import { ReactNode, Suspense } from "react";
+import { ThemeProvider } from "@web-ui";
 
 type PreLaunchProps = {
     children?: ReactNode[] | ReactNode;
@@ -20,7 +21,7 @@ type PreLaunchProps = {
     if (!isTranslationReady) {
       return null;
     } else {
-      return children;
+      return <ThemeProvider>{children}</ThemeProvider>;
     }
   };
   
