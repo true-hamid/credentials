@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@features/auth": ["features/auth/src/index.ts"],
       "@form-validations": ["packages/form-validations/src/index.ts"],
       "@global-store": ["packages/global-store/src/index.ts"],
       "@localization": ["packages/localization/src/index.ts"],
