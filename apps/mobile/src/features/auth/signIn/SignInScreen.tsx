@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
+import {RSA} from 'react-native-rsa-native';
 import { Text, Button, Container, Form } from '@native-ui';
 import { i18n } from '@localization';
 import { Spacer } from 'packages/native-ui/src/atoms';
 import { LoginFormFields } from '@types';
-import { useSignInForm } from '@form-validations';
+import { useSignInForm, useSignInData, useSignInApi } from '@features/auth';
+
+const getEncryptedValue = async (value: string, publicKey: string) => {
+  return await RSA.encrypt(value, publicKey);
+};
 
 const SignInScreen = () => {
   const { control, errors, isValidForm, handleSubmit } = useSignInForm();
+  const { requestSignIn, data, loading } = useSignInApi(getEncryptedValue);
+  const { setDataOnSignIn } = useSignInData();
 
-  const handleSignIn = (values: never) => {
-    console.log('values', values);
+  useEffect(() => {
+    if (data?.token) {
+      setDataOnSignIn({ token: data.token });
+    }
+  }, [data?.token]);
+
+  const handleSignIn = (values: { username: string; password: string }) => {
     // Handle sign-in logic here
+    requestSignIn({ username: values.username, password: values.password });
   };
 
   return (
@@ -45,14 +58,16 @@ const SignInScreen = () => {
           />
           <Spacer size={'l'} />
           <Button
-            disabled={!isValidForm}
+            disabled={!isValidForm || loading}
             mode="contained"
+            loading={loading}
             onPress={handleSubmit(handleSignIn)}
             style={styles.button}
           >
             {i18n.t('signIn')}
           </Button>
           <Spacer size={'m'} />
+          {/* @ts-expect-error we are not in the type definition business */}
           <Button mode="outlined" onPress={handleSignIn} style={styles.button}>
             {i18n.t('signUp')}
           </Button>

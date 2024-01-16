@@ -24,12 +24,16 @@ export const useAPIRequest = <Data>(defaultConfig?: AxiosRequestConfig) => {
   }
 
   const request = (requestConfig?: AxiosRequestConfig): void => {
+    setData(null);
+    setError(null);
     setLoading(true);
     AxiosInstance.request({ ...defaultConfig, ...requestConfig })
       .then((response: AxiosResponse<Data>) => {
+        console.log('REQ_response', response);
         setData(response.data);
       })
       .catch((error) => {
+        console.log('REQ_error', JSON.stringify(error));
         setError(error);
       })
       .finally(() => {

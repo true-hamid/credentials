@@ -30,13 +30,14 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       publicKey: string;
     };
   }): Promise<User> {
-    this.logger.log('REQYEST');
     const { /*payload,*/ username: encryptedUsername, password: encryptedPassword, randomId, publicKey } = body;
     // console.log('payload', payload);
     const payload = {
       encryptedUsername,
       encryptedPassword,
     }
+    this.logger.log('REQYEST', encryptedUsername, encryptedPassword);
+
     const {username, password} = await this.authService.decryptPayload(
       payload,
       randomId,

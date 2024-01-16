@@ -14,7 +14,7 @@ const initializei18next = (
     .init({
       compatibilityJSON: 'v3',
       lng: defaultLanguage,
-      debug,
+      // debug,
       backend: {
         projectId,
         apiKey,

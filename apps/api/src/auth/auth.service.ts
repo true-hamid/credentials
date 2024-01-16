@@ -30,7 +30,7 @@ export class AuthService {
       username: this.decryptStringWithRsaPrivateKey(encryptedPayload.encryptedUsername, privateKeyString),
       password: this.decryptStringWithRsaPrivateKey(encryptedPayload.encryptedPassword, privateKeyString),
     };
-    this.deleteCredsAfterSuccessfulDecryption(encrypt);
+    // this.deleteCredsAfterSuccessfulDecryption(encrypt);
     return payload;
   }
 

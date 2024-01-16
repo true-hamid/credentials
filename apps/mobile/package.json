@@ -21,6 +21,10 @@
     "react-native-paper": "*",
     "react-hook-form": "*",
     "yup": "*",
-    "@hookform/resolvers": "*"
+    "@hookform/resolvers": "*",
+    "axios": "*",
+    "react-native-rsa-native": "*",
+    "crypto-js": "*",
+    "react-native-get-random-values": "*"
   }
 }

@@ -14,12 +14,13 @@ import { i18n } from '@localization';
 import { useAppTheme } from '@theme';
 import { LoginFormFields } from '@types';
 import { useSignInApi, useSignInForm, useSignInData } from '@features/auth';
+import { getEncrypted } from '../utils';
 
 export default function SignIn() {
   const theme = useAppTheme();
   const navigate = useNavigate();
   const { control, errors, isValidForm, getValues } = useSignInForm();
-  const { requestSignIn, loading, data } = useSignInApi();
+  const { requestSignIn, loading, data } = useSignInApi(getEncrypted);
   const { setDataOnSignIn } = useSignInData();
 
   useEffect(() => {

@@ -27,7 +27,7 @@ export const useDynamicForm = ({
   const doErrorsExist = errors && Object.keys(errors).length > 0;
 
   const isValidForm = !doErrorsExist && isValid && isDirty;
-console.log('errors', errors);
+
   return {
     ...formProps,
     isValidForm,
