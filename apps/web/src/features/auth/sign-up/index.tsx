@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
-  Typography,
   Avatar,
   Box,
   Container,
@@ -16,6 +16,7 @@ import { useSignInApi, useSignInForm, useSignInData } from '@features/auth';
 
 export default function SignUp() {
   const theme = useAppTheme();
+  const navigate = useNavigate();
   const { control, errors, isValidForm, getValues } = useSignInForm();
   const { requestSignIn, loading, data } = useSignInApi();
   const { setDataOnSignIn } = useSignInData();
@@ -25,6 +26,10 @@ export default function SignUp() {
       setDataOnSignIn(data);
     }
   }, [data]);
+
+  const onSignInClick = () => {
+    navigate("/signin");
+  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -86,7 +91,7 @@ export default function SignUp() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                {i18n.t('signIn')}
+                {i18n.t('signUp')}
               </Button>
               {loading && (
                 <CircularProgress
@@ -102,8 +107,8 @@ export default function SignUp() {
               )}
             </Box>
 
-            <Button href="#" variant="outlined" fullWidth>
-              {i18n.t('signUp')}
+            <Button onClick={onSignInClick} variant="outlined" fullWidth>
+              {i18n.t('signIn')}
             </Button>
           </Box>
         </Box>

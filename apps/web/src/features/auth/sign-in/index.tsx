@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Typography,
   Avatar,
@@ -16,6 +17,7 @@ import { useSignInApi, useSignInForm, useSignInData } from '@features/auth';
 
 export default function SignIn() {
   const theme = useAppTheme();
+  const navigate = useNavigate();
   const { control, errors, isValidForm, getValues } = useSignInForm();
   const { requestSignIn, loading, data } = useSignInApi();
   const { setDataOnSignIn } = useSignInData();
@@ -25,6 +27,10 @@ export default function SignIn() {
       setDataOnSignIn(data);
     }
   }, [data]);
+
+  const onSignUpClick = () => {
+    navigate('/signup');
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -107,8 +113,7 @@ export default function SignIn() {
                 />
               )}
             </Box>
-
-            <Button href="#" variant="outlined" fullWidth>
+            <Button onClick={onSignUpClick} variant="outlined" fullWidth>
               {i18n.t('signUp')}
             </Button>
           </Box>
