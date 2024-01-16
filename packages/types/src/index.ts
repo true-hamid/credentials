@@ -49,3 +49,24 @@ export type SpacerProps = ViewProps & {
    */
   vertical?: boolean;
 };
+
+// export enum NetworkInstanceType {
+//   Basic = 'Basic',
+//   Auth = 'Auth',
+// }
+export enum API_METHODS {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+}
+
+export interface NetworkContextType {
+  baseURL: string;
+  authorization?: string;
+}
+
+export type NetworkProviderProps = {
+  children: React.ReactNode;
+  value: NetworkContextType
+};

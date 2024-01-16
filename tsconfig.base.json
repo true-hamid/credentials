@@ -15,16 +15,17 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@web-ui": ["packages/web-ui/src/index.ts"],
       "@form-validations": ["packages/form-validations/src/index.ts"],
       "@localization": ["packages/localization/src/index.ts"],
       "@localization/init": ["packages/localization/src/i18next.ts"],
       "@mobile/core": ["apps/mobile/src/core/index.ts"],
       "@native-ui": ["packages/native-ui/src/index.ts"],
+      "@network": ["packages/network/src/index.ts"],
       "@theme": ["packages/theme/src/index.ts"],
       "@types": ["packages/types/src/index.ts"],
       "@utils": ["packages/utils/src/index.ts"],
-      "@utils/native": ["packages/utils/src/native/index.ts"]
+      "@utils/native": ["packages/utils/src/native/index.ts"],
+      "@web-ui": ["packages/web-ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

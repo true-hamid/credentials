@@ -16,19 +16,34 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async decryptPassword(
-    encryptedPassword: string,
+  async decryptPayload(
+    encryptedPayload: { encryptedUsername: string; encryptedPassword: string },
     randomId: string,
     publicKey: string
-  ) {
+  ): Promise<Partial<User>> {
     const encrypt = await this.encryptRepository.findOneBy({
       randomId,
       publicKey,
     });
     const { privateKey: privateKeyString } = encrypt;
-    const buffer = Buffer.from(encryptedPassword, 'base64');
+    const payload = {
+      username: this.decryptStringWithRsaPrivateKey(encryptedPayload.encryptedUsername, privateKeyString),
+      password: this.decryptStringWithRsaPrivateKey(encryptedPayload.encryptedPassword, privateKeyString),
+    };
+    this.deleteCredsAfterSuccessfulDecryption(encrypt);
+    return payload;
+  }
+
+  // We are deleting in order to maintain a clean table
+  async deleteCredsAfterSuccessfulDecryption(encrypt: Encrypt) {
+    this.encryptRepository.delete(encrypt);
+    return encrypt;
+  }
+
+  decryptStringWithRsaPrivateKey(toDecrypt: string, privateKeyString: string) {
+    const buffer = Buffer.from(toDecrypt, 'base64');
     const privateKey = crypto.createPrivateKey(privateKeyString);
-    const decryptedPassword = crypto
+    return crypto
       .privateDecrypt(
         {
           key: privateKey,
@@ -37,8 +52,6 @@ export class AuthService {
         buffer
       )
       .toString();
-    console.log('decryptedPassword: ', decryptedPassword);
-    return decryptedPassword;
   }
 
   getAuthParams() {
