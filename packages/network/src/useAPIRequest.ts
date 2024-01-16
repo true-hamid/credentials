@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import NetworkContext from './NetworkContext';
 
 type FixedHeaders = {
