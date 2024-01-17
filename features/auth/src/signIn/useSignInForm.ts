@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import { i18n } from '@localization';
 import { SignInFormFields } from '@types';
 import { getFormValidations, useDynamicForm } from '@form-validations';
@@ -15,6 +16,12 @@ export const useSignInForm = () => {
         SignInFormFields.PASSWORD,
       ]),
     });
+
+    useEffect(() => {
+      console.log('FORRM', getValues());
+      console.log('FORRM_errror', errors);
+      console.log('FORRM_isValidForm', isValidForm);
+    }, [getValues()]);
 
   return {
     control,

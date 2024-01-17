@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { Button, Menu as RNPMenu } from 'react-native-paper';
+import { MenuProps } from '@types';
 
 export const Menu = ({
   clickableLabel,
   data,
+  selectedItem,
   onItemSelect,
-}: {
-  clickableLabel: string;
-  data: { label: string; value: string }[];
-  onItemSelect: (value: string) => void;
-}) => {
+  anchorStyle,
+}: MenuProps) => {
   const [visible, setVisible] = React.useState(false);
 
   const openMenu = () => setVisible(true);
@@ -20,14 +19,20 @@ export const Menu = ({
     <RNPMenu
       visible={visible}
       onDismiss={closeMenu}
-      anchor={<Button mode="elevated" onPress={openMenu}>{clickableLabel}</Button>}
+      anchor={
+        <Button style={anchorStyle} compact onPress={openMenu}>
+          {clickableLabel}
+        </Button>
+      }
     >
-      {data?.map((item) => (
+      {data?.map((item,index) => (
         <RNPMenu.Item
+          key={index+item.value}
           onPress={() => {
             onItemSelect(item.value);
+            closeMenu();
           }}
-          title={item.label}
+          title={`${item.flag} ${item.label}`}
         />
       ))}
     </RNPMenu>

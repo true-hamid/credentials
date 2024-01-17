@@ -21,8 +21,14 @@ export class User {
   @Column()
   name: string;
 
+  @Column({default: null})
+  pushNotificationId?: string;
+
   @Column()
-  pushNotificationId: string;
+  phoneNumber: string;
+
+  @Column()
+  country: string;
 
   @OneToOne(() => Profile)
   @JoinColumn()

@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as crypto from 'crypto';
+import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
@@ -13,6 +14,8 @@ export class AuthService {
   constructor(
     @InjectRepository(Encrypt)
     private readonly encryptRepository: Repository<Encrypt>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService
   ) {}
 
@@ -27,8 +30,14 @@ export class AuthService {
     });
     const { privateKey: privateKeyString } = encrypt;
     const payload = {
-      username: this.decryptStringWithRsaPrivateKey(encryptedPayload.encryptedUsername, privateKeyString),
-      password: this.decryptStringWithRsaPrivateKey(encryptedPayload.encryptedPassword, privateKeyString),
+      username: this.decryptStringWithRsaPrivateKey(
+        encryptedPayload.encryptedUsername,
+        privateKeyString
+      ),
+      password: this.decryptStringWithRsaPrivateKey(
+        encryptedPayload.encryptedPassword,
+        privateKeyString
+      ),
     };
     // this.deleteCredsAfterSuccessfulDecryption(encrypt);
     return payload;
@@ -74,5 +83,14 @@ export class AuthService {
 
   public getTokenForUser(user: User): string {
     return this.jwtService.sign({ username: user.username, sub: user.id });
+  }
+
+  hashPassword(password: string): string {
+    const SALT_ROUNDS = 8;
+    return bcrypt.hashSync(password, SALT_ROUNDS);
+  }
+
+  createUser(user: User) {
+    return this.userRepository.save(user);
   }
 }

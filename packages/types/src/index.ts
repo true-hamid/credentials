@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { ViewProps } from 'react-native';
+import { StyleProp, ViewProps, ViewStyle } from 'react-native';
 
 export interface ThemeProviderProps {
   children: ReactNode;
@@ -23,8 +23,16 @@ export enum USER_COUNTRY {
 }
 
 export enum SignInFormFields {
-  USERNAME = 'username',
-  PASSWORD = 'password',
+  USERNAME = 'signInUsername',
+  PASSWORD = 'signInPassword',
+}
+
+export enum SignUpFormFields {
+  USERNAME = 'signUpUsername',
+  PASSWORD = 'signUpPassword',
+  NAME = 'name',
+  COUNTRY = 'country',
+  PHONE_NUMBER = 'phoneNumber',
 }
 
 export enum PasswordFormFields {
@@ -68,5 +76,13 @@ export interface NetworkContextType {
 
 export type NetworkProviderProps = {
   children: React.ReactNode;
-  value: NetworkContextType
+  value: NetworkContextType;
+};
+
+export type MenuProps = {
+  clickableLabel: string;
+  data: { label: string; value: string, flag: string }[];
+  onItemSelect: (value: string) => void;
+  anchorStyle?: StyleProp<ViewStyle>;
+  selectedItem?: string;
 };

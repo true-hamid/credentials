@@ -8,7 +8,7 @@ export const TextInput = ({ ...rest }: TextInputProps) => {
     <RNPTextInput
       {...rest}
       theme={{
-        colors: { primary: colors.primary, surfaceVariant: colors.surface },
+        colors: { primary: colors.primary, surfaceVariant: colors.elevation.level2 },
       }}
     />
   );
