@@ -1,5 +1,5 @@
 import React, { Dispatch, ReactNode, useReducer } from 'react';
-import Reducer, { initialState, GlobalStateTypes } from './reducer';
+import Reducer, { initialState, GlobalStateTypes, ActionTypes } from './reducer';
 
 export const GlobalStateContext =
   React.createContext<GlobalStateTypes>(initialState);
@@ -10,7 +10,10 @@ export const GlobalDispatchContext = React.createContext(
 
 export default (props: { children: ReactNode }) => {
   const { children } = props;
-  const [state, dispatch] = useReducer(Reducer, initialState);
+  const [state, dispatch] = useReducer(
+    Reducer as (state: GlobalStateTypes, action: ActionTypes) => GlobalStateTypes,
+    initialState
+  );
   return (
     <GlobalDispatchContext.Provider value={dispatch}>
       <GlobalStateContext.Provider value={state}>

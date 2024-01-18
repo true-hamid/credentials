@@ -12,12 +12,12 @@ export const initialState = {
 };
 
 export type GlobalStateApiError = {
-  errorCode: string | null;
+  errorCode?: string | null;
 };
 
 export type GlobalStateSession = {
-  authToken: string | null;
-  country: USER_COUNTRY | null;
+  authToken?: string | null;
+  country?: USER_COUNTRY | null;
 };
 
 export type GlobalStateTypes = {

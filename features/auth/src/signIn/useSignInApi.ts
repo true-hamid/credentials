@@ -14,6 +14,7 @@ export const useSignInApi = (encryptionFunction: SignInApiParams) => {
     username: '',
     password: '',
   });
+  const [delayedAuthLoading, setDelayedAuthLoading] = useState(false);
 
   const {
     request: requestAuthData,
@@ -34,6 +35,20 @@ export const useSignInApi = (encryptionFunction: SignInApiParams) => {
     url: Endpoints.SIGN_IN,
     method: API_METHODS.POST,
   });
+
+  useEffect(() => {
+    if (authLoading) {
+      setDelayedAuthLoading(true);
+    } else {
+      // Delay setting delayedAuthLoading to false by 500ms
+      const timeoutId = setTimeout(() => {
+        setDelayedAuthLoading(false);
+      }, 500);
+
+      // Clear timeout on unmount
+      return () => clearTimeout(timeoutId);
+    }
+  }, [authLoading]);
 
   const signIn = async (publicKey: string) => {
     const encryptedUsername = await encryptionFunction(
@@ -68,7 +83,7 @@ export const useSignInApi = (encryptionFunction: SignInApiParams) => {
 
   return {
     requestSignIn,
-    loading: authLoading || signInLoading,
+    loading: delayedAuthLoading || signInLoading,
     error: signInError || authError,
     data: signInData,
   };

@@ -1,30 +1,41 @@
+import React, { ReactNode, Suspense, useCallback } from 'react';
 import { useTranslation } from '@localization';
-import { ReactNode, Suspense } from 'react';
-import { ThemeProvider } from '@web-ui';
+import { Loader, ThemeProvider } from '@web-ui';
+import { useGlobalStore } from '@global-store';
 import { NetworkProvider } from '@network';
-import { GlobalStoreProvider } from '@global-store';
-import initializei18next from '@localization/init';
+import APIErrorHandler from '../components/APIErrorHandler';
+import { StorageKeys } from '@utils';
+import { USER_COUNTRY } from '@types';
 
 type PreLaunchProps = {
   children?: ReactNode[] | ReactNode;
 };
 
-initializei18next(
-  process.env.NX_LOCALE_DEFAULT_LOCALE || 'en-US',
-  process.env.NX_LOCALE_DEBUG === 'true',
-  process.env.NX_LOCALE_PROJECT_ID || '',
-  process.env.NX_LOCALE_API_KEY || ''
-);
-
 const PreLaunch: React.FC<PreLaunchProps> = ({ children }) => {
+  const { session } = useGlobalStore();
+  const getUserCountryFromStorage = useCallback(
+    () => localStorage.getItem(StorageKeys.USER_COUNTRY) as USER_COUNTRY,
+    []
+  );
+
+  const getCountry = () => {
+    let country = undefined;
+    const userCountryFromStorage = getUserCountryFromStorage();
+
+    if (session?.country) {
+      country = { userCountry: session.country };
+    } else if (userCountryFromStorage) {
+      country = { userCountry: userCountryFromStorage };
+    }
+    return country;
+  };
 
   return (
-    // TODO: Add a loading screen
-    <Suspense fallback={<p>Wait...</p>}>
-      <GlobalStoreProvider>
+    <ThemeProvider value={getCountry()}>
+      <Suspense fallback={<Loader visible />}>
         <PRE_LAUNCH>{children}</PRE_LAUNCH>
-      </GlobalStoreProvider>
-    </Suspense>
+      </Suspense>
+    </ThemeProvider>
   );
 };
 
@@ -35,11 +46,10 @@ const PRE_LAUNCH: React.FC<PreLaunchProps> = ({ children }) => {
     return null;
   } else {
     return (
-      <ThemeProvider>
-        <NetworkProvider value={{ baseURL: 'api/' }}>
-          {children}
-        </NetworkProvider>
-      </ThemeProvider>
+      <NetworkProvider value={{ baseURL: process.env.NX_BASE_URL || '' }}>
+        <APIErrorHandler />
+        {children}
+      </NetworkProvider>
     );
   }
 };

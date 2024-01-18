@@ -14,8 +14,9 @@ import { StyleSheet } from 'react-native';
  * <Spacer horizontal size={'xxl'}/>
  */
 export const Spacer = (props: SpacerProps): JSX.Element => {
-  const { size: sizeName = 'sm', vertical = true, ...rest } = props;
-  const size = normalize(Sizes[sizeName] ? Sizes[sizeName] : Sizes['xs']);
+  const { size: sizeName = 's', vertical = true, ...rest } = props;
+  const requiredSize = Sizes[sizeName as keyof typeof Sizes] ? Sizes[sizeName as keyof typeof Sizes] : Sizes['xs'];
+  const size = normalize(requiredSize);
   const styles = getStyles(size, vertical);
   return <View {...rest} style={styles.container} />;
 };

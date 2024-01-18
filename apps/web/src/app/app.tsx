@@ -7,8 +7,9 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import { useGlobalStore } from '@global-store';
+import { GlobalStoreProvider, useGlobalStore } from '@global-store';
 import PreLoginRouter from '../core/routing/pre-login/routers';
+import '../core/language/i18next';
 
 export function App() {
   function Layout() {
@@ -73,9 +74,11 @@ export function App() {
     }
   }
   return (
-    <PreLaunch>
-      <PreLoginRouter />
-    </PreLaunch>
+    <GlobalStoreProvider>
+      <PreLaunch>
+        <PreLoginRouter />
+      </PreLaunch>
+    </GlobalStoreProvider>
   );
 }
 

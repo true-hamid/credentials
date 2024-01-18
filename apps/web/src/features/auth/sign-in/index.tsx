@@ -7,14 +7,16 @@ import {
   Container,
   LockOutlinedIcon,
   Button,
-  ControlledTextField,
+  Form,
   CircularProgress,
+  Loader,
 } from '@web-ui';
 import { i18n } from '@localization';
 import { useAppTheme } from '@theme';
 import { SignInFormFields } from '@types';
 import { useSignInApi, useSignInForm, useSignInData } from '@features/auth';
 import { getEncrypted } from '../utils';
+import { StorageKeys } from '@utils';
 
 export default function SignIn() {
   const theme = useAppTheme();
@@ -25,6 +27,7 @@ export default function SignIn() {
 
   useEffect(() => {
     if (data) {
+      localStorage.setItem(StorageKeys.USER_COUNTRY, data.country);
       setDataOnSignIn(data);
     }
   }, [data]);
@@ -70,7 +73,7 @@ export default function SignIn() {
             onSubmit={handleSubmit}
             sx={{ mt: 1 }}
           >
-            <ControlledTextField
+            <Form.ControlledTextField
               name={SignInFormFields.USERNAME}
               control={control}
               // @ts-expect-error we are not in the type definition business
@@ -79,7 +82,7 @@ export default function SignIn() {
               value={'hamidab'}
               helperTextType={'error'}
             />
-            <ControlledTextField
+            <Form.ControlledTextField
               name={SignInFormFields.PASSWORD}
               control={control}
               // @ts-expect-error we are not in the type definition business
@@ -117,6 +120,7 @@ export default function SignIn() {
             <Button onClick={onSignUpClick} variant="outlined" fullWidth>
               {i18n.t('signUp')}
             </Button>
+            <Loader visible={loading} />
           </Box>
         </Box>
       </Box>

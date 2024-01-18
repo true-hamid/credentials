@@ -25,6 +25,8 @@
       "@network": ["packages/network/src/index.ts"],
       "@theme": ["packages/theme/src/index.ts"],
       "@types": ["packages/types/src/index.ts"],
+      "@types-native": ["packages/types/src/native/index.ts"],
+      "@types-web": ["packages/types/src/web/index.ts"],
       "@utils": ["packages/utils/src/index.ts"],
       "@utils/native": ["packages/utils/src/native/index.ts"],
       "@web-ui": ["packages/web-ui/src/index.ts"]

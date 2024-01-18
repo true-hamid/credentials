@@ -12,7 +12,6 @@ import { USER_COUNTRY } from '@types';
 
 type PreLaunchProps = {
   children?: ReactNode[] | ReactNode;
-  userCountry?: USER_COUNTRY;
 };
 
 const PreLaunch: React.FC<PreLaunchProps> = ({ children }) => {

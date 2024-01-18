@@ -6,37 +6,50 @@ import {
   Container,
   LockOutlinedIcon,
   Button,
-  ControlledTextField,
+  Form,
   CircularProgress,
+  InputAdornment,
+  Loader,
+  Alert,
 } from '@web-ui';
 import { i18n } from '@localization';
 import { useAppTheme } from '@theme';
-import { SignInFormFields } from '@types';
-import { useSignInApi, useSignInForm, useSignInData } from '@features/auth';
+import { SemanticVariant, SignUpFormFields, USER_COUNTRY } from '@types';
+import { useSignUpForm, useSignUpApi, countriesList } from '@features/auth';
 import { getEncrypted } from '../utils';
+import { countryCodes } from '@utils';
 
 export default function SignUp() {
   const theme = useAppTheme();
   const navigate = useNavigate();
-  const { control, errors, isValidForm, getValues } = useSignInForm();
-  const { requestSignIn, loading, data } = useSignInApi(getEncrypted);
-  const { setDataOnSignIn } = useSignInData();
+  const [selectedCountry, setSelectedCountry] = React.useState<
+    USER_COUNTRY | undefined
+  >(undefined);
+  const { control, errors, isValidForm, getValues } =
+    useSignUpForm(selectedCountry);
+  const { requestSignUp, data, loading } = useSignUpApi(getEncrypted);
+  const countries = countriesList(i18n);
 
   useEffect(() => {
     if (data) {
-      setDataOnSignIn(data);
+      setTimeout(() => {
+        navigate('/signin');
+      }, 2000);
     }
   }, [data]);
 
   const onSignInClick = () => {
-    navigate("/signin");
-  }
+    navigate('/signin');
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    requestSignIn({
-      username: getValues().username,
-      password: getValues().password,
+    requestSignUp({
+      username: getValues().signUpUsername,
+      password: getValues().signUpPassword,
+      country: getValues().country,
+      phoneNumber: getValues().phoneNumber,
+      name: getValues().name,
     });
   };
 
@@ -54,6 +67,11 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
+          <Alert
+            visible={!!data}
+            variant={SemanticVariant.SUCCESS}
+            message={i18n.t([`accountCreatedSuccessfully`])}
+          />
           <Avatar sx={{ m: 3, bgcolor: theme.colors.primary }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -63,24 +81,57 @@ export default function SignUp() {
             onSubmit={handleSubmit}
             sx={{ mt: 1 }}
           >
-            <ControlledTextField
-              name={SignInFormFields.USERNAME}
+            <Form.ControlledMenu
+              name={SignUpFormFields.COUNTRY}
               control={control}
-              // @ts-expect-error we are not in the type definition business
-              errorMessage={errors?.[SignInFormFields.USERNAME]?.message}
-              label={i18n.t('username')}
-              value={'hamidab'}
-              helperTextType={'error'}
+              data={countries}
+              onItemSelect={(value: string) =>
+                setSelectedCountry(value as USER_COUNTRY)
+              }
+              clickableLabel={i18n.t('selectCountry')}
             />
-            <ControlledTextField
-              name={SignInFormFields.PASSWORD}
+            <Form.ControlledTextField
+              name={SignUpFormFields.NAME}
               control={control}
               // @ts-expect-error we are not in the type definition business
-              errorMessage={errors?.[SignInFormFields.PASSWORD]?.message}
+              errorMessage={errors?.[SignUpFormFields.NAME]?.message}
+              label={i18n.t('name')}
+              helperTextType={'error'}
+              margin="normal"
+            />
+            <Form.ControlledTextField
+              name={SignUpFormFields.USERNAME}
+              control={control}
+              // @ts-expect-error we are not in the type definition business
+              errorMessage={errors?.[SignUpFormFields.USERNAME]?.message}
+              label={i18n.t('username')}
+              helperTextType={'error'}
+              margin="normal"
+            />
+            <Form.ControlledTextField
+              name={SignUpFormFields.PHONE_NUMBER}
+              control={control}
+              // @ts-expect-error we are not in the type definition business
+              errorMessage={errors?.[SignUpFormFields.PHONE_NUMBER]?.message}
+              label={i18n.t('phoneNumber')}
+              helperTextType={'error'}
+              margin="normal"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    {selectedCountry ? countryCodes[selectedCountry] : ''}
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Form.ControlledTextField
+              name={SignUpFormFields.PASSWORD}
+              control={control}
+              // @ts-expect-error we are not in the type definition business
+              errorMessage={errors?.[SignUpFormFields.PASSWORD]?.message}
               label={i18n.t('password')}
               helperTextType={'error'}
               type="password"
-              value={'Mash123$'}
               autoComplete="current-password"
               margin="normal"
             />
@@ -108,9 +159,10 @@ export default function SignUp() {
               )}
             </Box>
 
-            <Button onClick={onSignInClick} variant="outlined" fullWidth>
+            <Button onClick={onSignInClick} variant="text" fullWidth>
               {i18n.t('signIn')}
             </Button>
+            <Loader visible={loading} />
           </Box>
         </Box>
       </Box>

@@ -1,15 +1,17 @@
 import * as React from 'react';
-import { Button } from '../../atoms';
-import { default as MaterialMenu } from '@mui/material/Menu';
-import { default as MaterialMenuItem } from '@mui/material/MenuItem';
-import { MenuProps } from '@types';
+import Button from '@mui/material/Button';
+import { default as MUIMenu } from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 export const Menu = ({
-  clickableLabel,
   data,
+  clickableLabel,
   onItemSelect,
-  anchorEl: propAnchorEl,
-}: MenuProps) => {
+}: {
+  data: { label: string; value: string }[];
+  clickableLabel: string;
+  onItemSelect: (value: string) => void;
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -18,12 +20,8 @@ export const Menu = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log('Menu_data', data);
-  console.log('Menu_', anchorEl);
-
-
   return (
-    <>
+    <div>
       <Button
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
@@ -33,26 +31,28 @@ export const Menu = ({
       >
         {clickableLabel}
       </Button>
-      <MaterialMenu
+      <MUIMenu
         id="basic-menu"
-        anchorEl={propAnchorEl || anchorEl}
+        anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
       >
-        {data?.map((item, index) => (
-          <MaterialMenuItem
-            key={index + item.value}
-            onClick={() => {
-              onItemSelect(item.value);
-              handleClose();
-            }}
-            title={item.label}
-          />
-        ))}
-      </MaterialMenu>
-    </>
+        {data.map((item, index) => (
+            <MenuItem
+                key={index + item.value}
+                onClick={() => {
+                onItemSelect(item.value);
+                handleClose();
+                }}
+            >
+                {item.label}
+            </MenuItem>
+            )
+        )}
+      </MUIMenu>
+    </div>
   );
 };
