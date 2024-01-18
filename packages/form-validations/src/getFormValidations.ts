@@ -15,13 +15,13 @@ const countrySpecificRegexsMap = {
     [USER_COUNTRY.AE]: RegularExperessions.AE_USERNAME,
     [USER_COUNTRY.IN]: RegularExperessions.IN_USERNAME,
     [USER_COUNTRY.SD]: RegularExperessions.SD_USERNAME,
-    'DEFAULT': RegularExperessions.ALPHANUMERIC_AND_SPECIAL_CHARS,
+    DEFAULT: RegularExperessions.ALPHANUMERIC_AND_SPECIAL_CHARS,
   },
   [SignUpFormFields.PHONE_NUMBER]: {
     [USER_COUNTRY.AE]: RegularExperessions.AE_PHONE_NUMBER,
     [USER_COUNTRY.IN]: RegularExperessions.IN_PHONE_NUMBER,
     [USER_COUNTRY.SD]: RegularExperessions.SD_PHONE_NUMBER,
-    'DEFAULT': RegularExperessions.NUMBERS_ONLY,
+    DEFAULT: RegularExperessions.NUMBERS_ONLY,
   },
 };
 
@@ -30,7 +30,9 @@ const getCountrySpecificRegexs = (
   field: SignUpFormFields.USERNAME | SignUpFormFields.PHONE_NUMBER,
   country?: USER_COUNTRY
 ) => {
-  return countrySpecificRegexsMap[field]?.[country || 'DEFAULT'];
+  const v = countrySpecificRegexsMap[field]?.[country || 'DEFAULT'];
+  console.log('v', v);
+  return v;
 };
 
 export const getFormValidations = (
@@ -50,37 +52,36 @@ export const getFormValidations = (
     [SignUpFormFields.COUNTRY]: yup.string().required(),
     [SignUpFormFields.USERNAME]: yup
       .string()
-      .required(t('pleaseEnterValidUsername'))
+      .required(t('pleaseEnterValidUsername'+country))
       .matches(
         new RegExp(
           getCountrySpecificRegexs(SignUpFormFields.USERNAME, country)
         ),
-        t('pleaseEnterValidUsername')
+        t('pleaseEnterValidUsername'+country)
       ),
     [SignUpFormFields.PASSWORD]: yup
       .string()
       .required(t('pleaseEnterValidPassword'))
-      // .matches(
-      //   new RegExp(RegularExperessions.ALPHANUMERIC_AND_SPECIAL_CHARS),
-      //   t('pleaseEnterValidPassword')
-      // ),
-      ,
+      .matches(
+        new RegExp(RegularExperessions.ALPHANUMERIC_AND_SPECIAL_CHARS),
+        t('pleaseEnterValidPassword')
+      ),
     [SignUpFormFields.NAME]: yup
       .string()
       .required(t('pleaseEnterValidName'))
       .matches(
-        new RegExp(RegularExperessions.ALPHABETS_ONLY),
+        new RegExp(RegularExperessions.ALPHABETS_WITH_SPACE),
         t('pleaseEnterValidName')
       ),
-    [SignUpFormFields.PHONE_NUMBER]: yup.string()
-      // .string()
-      .required(t('pleaseEnterValidPhoneNumber'))
-      // .matches(
-      //   new RegExp(
-      //     getCountrySpecificRegexs(SignUpFormFields.PHONE_NUMBER, country)
-      //   ),
-      //   t('pleaseEnterValidPhoneNumber')
-      // ),
+    [SignUpFormFields.PHONE_NUMBER]: yup
+      .string()
+      .required(t('pleaseEnterValidPhoneNumber'+country))
+      .matches(
+        new RegExp(
+          getCountrySpecificRegexs(SignUpFormFields.PHONE_NUMBER, country)
+        ),
+        t('pleaseEnterValidPhoneNumber'+country)
+      ),
   };
 
   return getValidationSchemaFunc({ validation });

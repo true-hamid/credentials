@@ -32,7 +32,7 @@ export const Menu = ({
             onItemSelect(item.value);
             closeMenu();
           }}
-          title={`${item.flag} ${item.label}`}
+          title={item.label}
         />
       ))}
     </RNPMenu>

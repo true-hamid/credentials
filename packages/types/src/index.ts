@@ -23,8 +23,8 @@ export enum USER_COUNTRY {
 }
 
 export enum SignInFormFields {
-  USERNAME = 'signInUsername',
-  PASSWORD = 'signInPassword',
+  USERNAME = 'username',
+  PASSWORD = 'password',
 }
 
 export enum SignUpFormFields {

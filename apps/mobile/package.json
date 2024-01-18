@@ -25,6 +25,11 @@
     "axios": "*",
     "react-native-rsa-native": "*",
     "crypto-js": "*",
-    "react-native-get-random-values": "*"
+    "react-native-get-random-values": "*",
+    "react-native-config": "*",
+    "react-native-push-notification": "*",
+    "@react-native-community/push-notification-ios": "*",
+    "@react-native-firebase/app": "*",
+    "@react-native-firebase/messaging": "*"
   }
 }

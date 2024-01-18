@@ -5,6 +5,8 @@ import { ThemeProvider } from '@native-ui';
 import initializei18next from '@localization/init';
 import { GlobalStoreProvider } from '@global-store';
 import { NetworkProvider } from '@network';
+import { config } from '../../core/config';
+import { isIOS } from '@utils/native';
 
 type PreLaunchProps = {
   children?: ReactNode[] | ReactNode;
@@ -12,10 +14,10 @@ type PreLaunchProps = {
 
 // TODO-CONFIG: get these values from environment variables
 initializei18next(
-  'en-US',
-  true,
-  '66930075-9b8e-42ae-b50a-3ceee4997710',
-  'fba250fe-958d-46c3-b0a1-081542de5cf8'
+  config.DEFAULT_APP_LANGUAGE,
+  config.LOCALE_DEBUG === 'true',
+  config.LOCALE_PROJECT_ID,
+  config.LOCALE_API_KEY
 );
 
 const PreLaunch: React.FC<PreLaunchProps> = ({ children }) => {
@@ -38,7 +40,11 @@ const PRE_LAUNCH: React.FC<PreLaunchProps> = ({ children }) => {
     // TODO: set theme later
     return (
       <ThemeProvider>
-        <NetworkProvider value={{ baseURL: 'http://10.0.2.2:3000/api/' }}>
+        <NetworkProvider
+          value={{
+            baseURL: isIOS ? config.IOS_BASE_URL : config.ANDROID_BASE_URL,
+          }}
+        >
           {children}
         </NetworkProvider>
       </ThemeProvider>

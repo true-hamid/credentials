@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Text, Button, Container, Form, TextInputAffix } from '@native-ui';
 import { i18n } from '@localization';
@@ -8,11 +8,13 @@ import { SignUpFormFields } from '@types';
 import { useSignUpForm, useSignUpApi, countriesList } from '@features/auth';
 import { getEncryptedValue } from '../_config/utils';
 import { countryCodes } from '@utils';
+import { tryToGetFCMToken } from '@utils/native';
 
 const SignUpScreen = () => {
   const [selectedCountry, setSelectedCountry] = React.useState(undefined);
+  const [fcmToken, setFcmToken] = React.useState(undefined);
   const { goBack } = useNavigation();
-  const { control, errors, isValidForm, handleSubmit } =
+  const { control, errors, isValidForm, handleSubmit, getValues } =
     useSignUpForm(selectedCountry);
   const { requestSignUp, data, loading } = useSignUpApi(getEncryptedValue);
 
@@ -20,21 +22,39 @@ const SignUpScreen = () => {
     console.log('data', data);
   }, [data?.token]);
 
-  const handleSignUp = (values: {
-    signUpUsername: string;
-    signUpPassword: string;
-    country: string;
-    phoneNumber: string;
-    name: string;
-  }) => {
-    // Handle sign-in logic here
+  const setFCMTokenAfterPermission = async () => {
+    const token = await tryToGetFCMToken();
+    setFcmToken(token);
+  };
+
+  const handleSignUp = () => {
+    const values = getValues();
+    const fcmTokenValue = fcmToken ? { fcmToken } : {};
     requestSignUp({
       username: values.signUpUsername,
       password: values.signUpPassword,
       country: values.country,
       phoneNumber: values.phoneNumber,
       name: values.name,
+      ...fcmTokenValue,
     });
+  };
+
+  const getNotificationToken = () => {
+    Alert.alert(
+      i18n.t('signUpNotificationPermissionTitle'),
+      i18n.t('signUpNotificationPermissionSubtitle'),
+      [
+        {
+          text: i18n.t('cancel'),
+          style: 'cancel',
+        },
+        {
+          text: i18n.t('ok'),
+          onPress: setFCMTokenAfterPermission,
+        },
+      ]
+    );
   };
 
   const handleSignIn = () => {
@@ -55,16 +75,15 @@ const SignUpScreen = () => {
             disabled={!isValidForm || loading}
             mode="contained"
             loading={loading}
-            onPress={handleSubmit(handleSignUp)}
+            onPress={getNotificationToken}
             style={styles.button}
           >
             {i18n.t('signUp')}
           </Button>
           <Spacer size={'m'} />
-          <Button mode="outlined" onPress={handleSignIn} style={styles.button}>
+          <Button mode="text" onPress={handleSignIn} style={styles.button}>
             {i18n.t('signIn')}
           </Button>
-          <Spacer size={'xl'} />
         </>
       }
     >

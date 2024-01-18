@@ -51,8 +51,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         HttpStatus.NOT_ACCEPTABLE
       );
     }
-
-    if (password !== user.password) {
+    if (this.authService.hashPassword(password) !== user.password) {
       this.logger.error(`Invalid password for user ${username}`);
       throw new HttpException(
         ERROR_CODES.INVALID_SIGN_IN_PASSWORD,

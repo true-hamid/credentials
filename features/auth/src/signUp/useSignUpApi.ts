@@ -9,6 +9,7 @@ type FormValues = {
   country: string;
   name: string;
   phoneNumber: string;
+  fcmToken?: string;
 };
 type SignUpApiParams = (
   value: string,
@@ -46,8 +47,6 @@ export const useSignUpApi = (encryptionFunction: SignUpApiParams) => {
   });
 
   const signUp = async (publicKey: string) => {
-    console.log('publicKey', publicKey);
-    console.log('formValues', formValues);
     const encryptedUsername = await encryptionFunction(
       formValues.username,
       publicKey
@@ -64,8 +63,9 @@ export const useSignUpApi = (encryptionFunction: SignUpApiParams) => {
       phoneNumber: formValues.phoneNumber,
       randomId: authData?.randomId,
       publicKey: authData?.pbk,
+      fcmToken: formValues.fcmToken,
     };
-    console.log('data', data);
+
     request({
       data,
     });
@@ -86,7 +86,6 @@ export const useSignUpApi = (encryptionFunction: SignUpApiParams) => {
   }, [authLoading, signUpLoading, loading, signUpError, authError, signUpData]);
 
   const requestSignUp = (params: FormValues) => {
-    console.log('params', params);
     setFormValues(params);
     requestAuthData();
   };
