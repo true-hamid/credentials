@@ -6,4 +6,5 @@ export class CreateUserDto {
   phoneNumber: string;
   randomId: string;
   publicKey: string;
+  pushNotificationId?: string
 }

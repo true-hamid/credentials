@@ -9,7 +9,7 @@ type FormValues = {
   country: string;
   name: string;
   phoneNumber: string;
-  fcmToken?: string;
+  pushNotificationId?: string;
 };
 type SignUpApiParams = (
   value: string,
@@ -24,7 +24,6 @@ export const useSignUpApi = (encryptionFunction: SignUpApiParams) => {
     name: '',
     phoneNumber: '',
   });
-  const [loading, setLoading] = useState(false);
 
   const {
     request: requestAuthData,
@@ -63,7 +62,7 @@ export const useSignUpApi = (encryptionFunction: SignUpApiParams) => {
       phoneNumber: formValues.phoneNumber,
       randomId: authData?.randomId,
       publicKey: authData?.pbk,
-      fcmToken: formValues.fcmToken,
+      pushNotificationId: formValues.pushNotificationId,
     };
 
     request({
@@ -77,14 +76,6 @@ export const useSignUpApi = (encryptionFunction: SignUpApiParams) => {
     }
   }, [authData?.pbk]);
 
-  useEffect(() => {
-    if ((loading && signUpError) || authError || signUpData) {
-      setLoading(false);
-    } else if ((!loading && signUpLoading) || authLoading) {
-      setLoading(true);
-    }
-  }, [authLoading, signUpLoading, loading, signUpError, authError, signUpData]);
-
   const requestSignUp = (params: FormValues) => {
     setFormValues(params);
     requestAuthData();
@@ -92,7 +83,7 @@ export const useSignUpApi = (encryptionFunction: SignUpApiParams) => {
 
   return {
     requestSignUp,
-    loading,
+    loading: authLoading || signUpLoading,
     error: signUpError || authError,
     data: signUpData,
   };

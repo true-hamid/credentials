@@ -1,4 +1,4 @@
-import React, { ReactNode, Suspense } from 'react';
+import React, { ReactNode, Suspense, useCallback } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from '@localization';
 import { ThemeProvider } from '@native-ui';
@@ -7,6 +7,10 @@ import { GlobalStoreProvider } from '@global-store';
 import { NetworkProvider } from '@network';
 import { config } from '../../core/config';
 import { isIOS } from '@utils/native';
+import APIErrorHandler from '../components/APIErrorHandler';
+import { Storage } from '../../core/storage';
+import { StorageKeys } from '@utils';
+import { USER_COUNTRY } from '@types';
 
 type PreLaunchProps = {
   children?: ReactNode[] | ReactNode;
@@ -33,18 +37,20 @@ const PreLaunch: React.FC<PreLaunchProps> = ({ children }) => {
 
 const PRE_LAUNCH: React.FC<PreLaunchProps> = ({ children }) => {
   const { ready: isTranslationReady } = useTranslation();
+  const userCountry = Storage.getString(StorageKeys.USER_COUNTRY) as USER_COUNTRY;
 
   if (!isTranslationReady) {
     return null;
   } else {
     // TODO: set theme later
     return (
-      <ThemeProvider>
+      <ThemeProvider value={{userCountry}}>
         <NetworkProvider
           value={{
             baseURL: isIOS ? config.IOS_BASE_URL : config.ANDROID_BASE_URL,
           }}
         >
+          <APIErrorHandler />
           {children}
         </NetworkProvider>
       </ThemeProvider>

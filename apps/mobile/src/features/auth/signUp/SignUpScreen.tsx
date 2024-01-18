@@ -19,8 +19,16 @@ const SignUpScreen = () => {
   const { requestSignUp, data, loading } = useSignUpApi(getEncryptedValue);
 
   useEffect(() => {
-    console.log('data', data);
-  }, [data?.token]);
+    if(data){
+      setFcmToken(undefined);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if(fcmToken){
+      handleSignUp();
+    }
+  }, [fcmToken]);
 
   const setFCMTokenAfterPermission = async () => {
     const token = await tryToGetFCMToken();
@@ -29,7 +37,7 @@ const SignUpScreen = () => {
 
   const handleSignUp = () => {
     const values = getValues();
-    const fcmTokenValue = fcmToken ? { fcmToken } : {};
+    const fcmTokenValue = fcmToken ? { pushNotificationId: fcmToken } : {};
     requestSignUp({
       username: values.signUpUsername,
       password: values.signUpPassword,

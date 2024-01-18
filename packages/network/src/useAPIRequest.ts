@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import NetworkContext from './NetworkContext';
+import { useGlobalStore } from '@global-store';
 
 type FixedHeaders = {
   authorization?: string;
@@ -8,6 +9,7 @@ type FixedHeaders = {
 
 const TIMEOUT = 10000;
 export const useAPIRequest = <Data>(defaultConfig?: AxiosRequestConfig) => {
+  const { setApiError } = useGlobalStore();
   const { baseURL, authorization } = useContext(NetworkContext);
   const [data, setData] = useState<Data | null>(null);
   const [error, setError] = useState(null);
@@ -33,8 +35,11 @@ export const useAPIRequest = <Data>(defaultConfig?: AxiosRequestConfig) => {
         setData(response.data);
       })
       .catch((error) => {
-        console.log('REQ_error', JSON.stringify(error));
+        console.log('REQ_error', error);
         setError(error);
+        setApiError({
+          errorCode: error?.response?.data?.message || 'GENERAL_ERROR',
+        });
       })
       .finally(() => {
         setLoading(false);

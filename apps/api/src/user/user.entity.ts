@@ -1,11 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Profile } from './profile.entity';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -21,7 +14,7 @@ export class User {
   @Column()
   name: string;
 
-  @Column({default: null})
+  @Column({ default: null })
   pushNotificationId?: string;
 
   @Column()
@@ -29,8 +22,4 @@ export class User {
 
   @Column()
   country: string;
-
-  @OneToOne(() => Profile)
-  @JoinColumn()
-  profile: Profile;
 }

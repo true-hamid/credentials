@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { Encrypt } from './ecrypt.entity';
-import { User } from './user.entity';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -39,7 +39,7 @@ export class AuthService {
         privateKeyString
       ),
     };
-    // this.deleteCredsAfterSuccessfulDecryption(encrypt);
+    this.deleteCredsAfterSuccessfulDecryption(encrypt);
     return payload;
   }
 
@@ -81,6 +81,11 @@ export class AuthService {
     };
   }
 
+  public async validateUserExists(username: string): Promise<boolean> {
+    const user = await this.userRepository.findOneBy({ username });
+    return !!user;
+  }
+
   public getTokenForUser(user: User): string {
     return this.jwtService.sign({ username: user.username, sub: user.id });
   }
@@ -88,6 +93,10 @@ export class AuthService {
   hashPassword(password: string): string {
     const SALT_ROUNDS = 8;
     return bcrypt.hashSync(password, SALT_ROUNDS);
+  }
+
+  validatePasswordsMatch(password1: string, password2: string): boolean {
+    return bcrypt.compareSync(password1, password2);
   }
 
   createUser(user: User) {

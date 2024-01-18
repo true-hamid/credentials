@@ -14,7 +14,6 @@ export const useSignInApi = (encryptionFunction: SignInApiParams) => {
     username: '',
     password: '',
   });
-  const [loading, setLoading] = useState(false);
 
   const {
     request: requestAuthData,
@@ -62,14 +61,6 @@ export const useSignInApi = (encryptionFunction: SignInApiParams) => {
     }
   }, [authData?.pbk]);
 
-  useEffect(() => {
-    if ((loading && signInError) || authError || signInData) {
-      setLoading(false);
-    } else if ((!loading && signInLoading) || authLoading) {
-      setLoading(true);
-    }
-  }, [authLoading, signInLoading, loading, signInError, authError, signInData]);
-
   const requestSignIn = (params: { username: string; password: string }) => {
     setFormValues(params);
     requestAuthData();
@@ -77,7 +68,7 @@ export const useSignInApi = (encryptionFunction: SignInApiParams) => {
 
   return {
     requestSignIn,
-    loading,
+    loading: authLoading || signInLoading,
     error: signInError || authError,
     data: signInData,
   };

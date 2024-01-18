@@ -11,7 +11,6 @@ import { useGlobalStore } from '@global-store';
 import PreLoginRouter from '../core/routing/pre-login/routers';
 
 export function App() {
-  const { clearAuthToken } = useGlobalStore();
   function Layout() {
     return (
       <div>
@@ -31,10 +30,10 @@ export function App() {
     );
   }
   function AuthStatus() {
-    const { authToken } = useGlobalStore();
+    const { session, clearSession } = useGlobalStore();
     const navigate = useNavigate();
 
-    if (!authToken) {
+    if (!session?.authToken) {
       return <p>You are not logged in.</p>;
     }
 
@@ -43,7 +42,7 @@ export function App() {
         Welcome USER!{' '}
         <button
           onClick={() => {
-            clearAuthToken();
+            clearSession();
             navigate('/');
           }}
         >
@@ -62,10 +61,10 @@ export function App() {
   }
 
   function RequireAuth({ children }: { children: JSX.Element }) {
-    const { authToken } = useGlobalStore();
+    const { session } = useGlobalStore();
     const location = useLocation();
 
-    if (!authToken) {
+    if (!session?.authToken) {
       // Redirect them to the /login page, but save the current location they were
       // trying to go to when they were redirected. This allows us to send them
       // along to that page after they login, which is a nicer user experience

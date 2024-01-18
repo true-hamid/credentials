@@ -81,8 +81,15 @@ export type NetworkProviderProps = {
 
 export type MenuProps = {
   clickableLabel: string;
-  data: { label: string; value: string, flag: string }[];
+  data: { label: string; value: string; flag: string }[];
   onItemSelect: (value: string) => void;
   anchorStyle?: StyleProp<ViewStyle>;
   selectedItem?: string;
 };
+
+export enum SemanticVariant {
+  SUCCESS = 'success',
+  ERROR = 'error',
+  WARNING = 'warning',
+  INFO = 'INFO',
+}

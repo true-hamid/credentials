@@ -1,2 +1,5 @@
-export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
-export const CLEAR_AUTH_TOKEN = 'CLEAR_AUTH_TOKEN';
+export const SET_SESSION = 'SET_SESSION';
+export const CLEAR_SESSION = 'CLEAR_SESSION';
+
+export const SET_API_ERROR = 'SET_API_ERROR';
+export const CLEAR_API_ERROR = 'CLEAR_API_ERROR';

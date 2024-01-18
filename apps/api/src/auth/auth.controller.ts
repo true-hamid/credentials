@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  HttpException,
+  HttpStatus,
   Logger,
   Post,
   Request,
@@ -9,8 +11,9 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
-import { User } from './user.entity';
+import { User } from '../user/user.entity';
 import { CreateUserDto } from './dto/create.user.dto';
+import { ERROR_CODES } from './constants';
 
 @Controller('auth')
 export class AuthController {
@@ -25,6 +28,13 @@ export class AuthController {
   @Post('signUp')
   async signUp(@Body() createUserDto: CreateUserDto) {
     const user = new User();
+    const existingUser = this.authService.validateUserExists(user.username);
+    if (existingUser) {
+      throw new HttpException(
+        ERROR_CODES.INVALID_SIGN_UP_USERNAME_EXIST,
+        HttpStatus.NOT_ACCEPTABLE
+      );
+    }
     const { username, password } = await this.authService.decryptPayload(
       {
         encryptedUsername: createUserDto.username,
@@ -34,16 +44,14 @@ export class AuthController {
       createUserDto.publicKey
     );
     const hashedPassword = this.authService.hashPassword(password);
-    this.logger.log('encrypted username: '+ createUserDto.username);
-    this.logger.log('decrypted username: '+ username);
-    this.logger.log('encrypted password: '+ createUserDto.password);
-    this.logger.log('decrypted password: '+ password);
-    this.logger.log('hashed password: '+ hashedPassword);
     user.username = username;
     user.password = hashedPassword;
     user.country = createUserDto.country;
     user.name = createUserDto.name;
     user.phoneNumber = createUserDto.phoneNumber;
+    if (createUserDto?.pushNotificationId) {
+      user.pushNotificationId = createUserDto.pushNotificationId;
+    }
     this.authService.createUser(user);
 
     return { message: 'User created', status: 'success' };
@@ -55,7 +63,7 @@ export class AuthController {
     return {
       message: 'User authenticated',
       token: this.authService.getTokenForUser(request.user),
-      // country: request.user.country,
+      country: request.user.country,
     };
   }
 

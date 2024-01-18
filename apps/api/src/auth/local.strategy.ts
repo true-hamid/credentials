@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Strategy } from 'passport-local';
-import { User } from './user.entity';
+import { User } from '../user/user.entity';
 import { AuthService } from './auth.service';
 import { ERROR_CODES } from './constants';
 
@@ -30,15 +30,20 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       publicKey: string;
     };
   }): Promise<User> {
-    const { /*payload,*/ username: encryptedUsername, password: encryptedPassword, randomId, publicKey } = body;
+    const {
+      /*payload,*/ username: encryptedUsername,
+      password: encryptedPassword,
+      randomId,
+      publicKey,
+    } = body;
     // console.log('payload', payload);
     const payload = {
       encryptedUsername,
       encryptedPassword,
-    }
+    };
     this.logger.log('REQYEST', encryptedUsername, encryptedPassword);
 
-    const {username, password} = await this.authService.decryptPayload(
+    const { username, password } = await this.authService.decryptPayload(
       payload,
       randomId,
       publicKey
@@ -51,7 +56,14 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         HttpStatus.NOT_ACCEPTABLE
       );
     }
-    if (this.authService.hashPassword(password) !== user.password) {
+    const passwordMatch = this.authService.validatePasswordsMatch(
+      password,
+      user.password
+    );
+    this.logger.log(`user.password ${user.password}`);
+    this.logger.log(`password ${password}`);
+    this.logger.log(`passwordMatch ${passwordMatch}`);
+    if (!passwordMatch) {
       this.logger.error(`Invalid password for user ${username}`);
       throw new HttpException(
         ERROR_CODES.INVALID_SIGN_IN_PASSWORD,

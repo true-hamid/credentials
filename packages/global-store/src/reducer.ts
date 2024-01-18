@@ -1,29 +1,59 @@
+import { USER_COUNTRY } from '@types';
 import * as Constants from './constants';
 
 export const initialState = {
-  authToken: null,
+  apiError: {
+    errorCode: null,
+  },
+  session: {
+    authToken: null,
+    country: null,
+  },
+};
+
+export type GlobalStateApiError = {
+  errorCode: string | null;
+};
+
+export type GlobalStateSession = {
+  authToken: string | null;
+  country: USER_COUNTRY | null;
 };
 
 export type GlobalStateTypes = {
-  authToken: string | null;
+  apiError?: GlobalStateApiError;
+  session?: GlobalStateSession;
 };
 
 export type ActionTypes = {
   type: string;
-  payload: string | null;
+  payload: GlobalStateApiError | GlobalStateSession | null;
 };
 
-export default (state: GlobalStateTypes = initialState, action: ActionTypes) => {
+export default (
+  state: GlobalStateTypes = initialState,
+  action: ActionTypes
+) => {
   switch (action.type) {
-    case Constants.SET_AUTH_TOKEN:
+    case Constants.SET_SESSION:
       return {
         ...state,
-        authToken: action.payload,
+        session: action.payload,
       };
-    case Constants.CLEAR_AUTH_TOKEN:
+    case Constants.CLEAR_SESSION:
       return {
         ...state,
-        authToken: initialState.authToken,
+        session: initialState.session,
+      };
+    case Constants.SET_API_ERROR:
+      return {
+        ...state,
+        apiError: action.payload,
+      };
+    case Constants.CLEAR_API_ERROR:
+      return {
+        ...state,
+        apiError: initialState.apiError,
       };
     default:
       return state;

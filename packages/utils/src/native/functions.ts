@@ -19,20 +19,20 @@ export async function tryToGetFCMToken() {
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-      if(enabled) {
-        const token = await messaging().getToken()
-        console.log('Authorization token:', token);
-      }
+    if (enabled) {
+      const token = await messaging().getToken();
+      return token;
+    }
 
-    return enabled;
+    return false;
   } else {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
     );
-    if(granted === PermissionsAndroid.RESULTS.GRANTED) {
-      const token = await messaging().getToken()
-      console.log('Authorization token:', token);
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      const token = await messaging().getToken();
+      return token;
     }
-    return granted === PermissionsAndroid.RESULTS.GRANTED;
+    return false;
   }
 }

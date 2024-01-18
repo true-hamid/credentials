@@ -4,10 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from '../auth/auth.module';
-import { User } from '../auth/user.entity';
-import { Profile } from '../auth/profile.entity';
-import { AuthController } from '../auth/auth.controller';
+import { User } from '../user/user.entity';
 import { Encrypt } from '../auth/ecrypt.entity';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [
@@ -18,10 +17,11 @@ import { Encrypt } from '../auth/ecrypt.entity';
       username: 'root',
       password: 'example',
       database: 'credentials',
-      entities: [User, Profile, Encrypt],
+      entities: [User, Encrypt],
       synchronize: true,
     }),
     AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
