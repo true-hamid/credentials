@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Endpoints, useAPIRequest } from '@network';
-import { API_METHODS } from '@types';
+import { API_METHODS, SignInApiResponse } from '@types';
 
 type AuthResponse = { pbk: ''; randomId: '' };
 type FormValues = { username: string; password: string };
@@ -30,7 +30,7 @@ export const useSignInApi = (encryptionFunction: SignInApiParams) => {
     loading: signInLoading,
     error: signInError,
     data: signInData,
-  } = useAPIRequest<{ token: string }>({
+  } = useAPIRequest<SignInApiResponse>({
     url: Endpoints.SIGN_IN,
     method: API_METHODS.POST,
   });

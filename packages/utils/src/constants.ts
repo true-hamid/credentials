@@ -8,4 +8,5 @@ export const countryCodes = {
 
 export const StorageKeys = {
   USER_COUNTRY: 'userCountry',
+  APP_LANG: 'appLang',
 };

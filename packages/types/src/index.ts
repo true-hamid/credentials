@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { StyleProp, ViewProps, ViewStyle } from 'react-native';
+import { getTheme } from '@theme/src/core/helpers';
 
 export interface ThemeProviderProps {
   children: ReactNode;
@@ -7,7 +8,7 @@ export interface ThemeProviderProps {
 }
 
 export interface ThemeParams {
-  userCountry?: USER_COUNTRY;
+  userCountry?: USER_COUNTRY | undefined;
 }
 
 export enum LANGUAGE {
@@ -71,7 +72,7 @@ export enum API_METHODS {
 
 export interface NetworkContextType {
   baseURL: string;
-  authorization?: string;
+  channel?: string;
 }
 
 export type NetworkProviderProps = {
@@ -81,10 +82,13 @@ export type NetworkProviderProps = {
 
 export type MenuProps = {
   clickableLabel: string;
-  data: { label: string; value: string; flag: string }[];
+  data: { label: string; value: string }[];
   onItemSelect: (value: string) => void;
   anchorStyle?: StyleProp<ViewStyle>;
   selectedItem?: string;
+  anchor?: ReactNode;
+  menuVisible?: boolean;
+  onCloseMenu?: () => void;
 };
 
 export enum SemanticVariant {
@@ -93,3 +97,7 @@ export enum SemanticVariant {
   WARNING = 'warning',
   INFO = 'INFO',
 }
+
+export type SignInApiResponse = { authToken: string; country: USER_COUNTRY };
+
+export type ThemeObject = typeof getTheme;

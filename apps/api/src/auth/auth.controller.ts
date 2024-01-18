@@ -28,13 +28,6 @@ export class AuthController {
   @Post('signUp')
   async signUp(@Body() createUserDto: CreateUserDto) {
     const user = new User();
-    const existingUser = this.authService.validateUserExists(user.username);
-    if (existingUser) {
-      throw new HttpException(
-        ERROR_CODES.INVALID_SIGN_UP_USERNAME_EXIST,
-        HttpStatus.NOT_ACCEPTABLE
-      );
-    }
     const { username, password } = await this.authService.decryptPayload(
       {
         encryptedUsername: createUserDto.username,
@@ -43,6 +36,14 @@ export class AuthController {
       createUserDto.randomId,
       createUserDto.publicKey
     );
+    const existingUser = await this.authService.validateUserExists(username);
+    if (existingUser) {
+      this.logger.error(`User ${username} already exists`);
+      throw new HttpException(
+        ERROR_CODES.INVALID_SIGN_UP_USERNAME_EXIST,
+        HttpStatus.NOT_ACCEPTABLE
+      );
+    }
     const hashedPassword = this.authService.hashPassword(password);
     user.username = username;
     user.password = hashedPassword;
@@ -62,15 +63,8 @@ export class AuthController {
   async signIn(@Request() request: { user: User }) {
     return {
       message: 'User authenticated',
-      token: this.authService.getTokenForUser(request.user),
+      authToken: this.authService.getTokenForUser(request.user),
       country: request.user.country,
     };
-  }
-
-  @Get('profile')
-  @UseGuards(AuthGuard('jwt'))
-  async getProfile(@Request() request) {
-    console.log('WHY JWT');
-    return request.user;
   }
 }

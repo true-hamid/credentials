@@ -1,10 +1,18 @@
 import React, { useEffect } from 'react';
 import { Alert, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Text, Button, Container, Form, TextInputAffix } from '@native-ui';
+import {
+  Text,
+  Button,
+  Container,
+  Form,
+  TextInputAffix,
+  Banner,
+  Loader,
+} from '@native-ui';
 import { i18n } from '@localization';
 import { Spacer } from 'packages/native-ui/src/atoms';
-import { SignUpFormFields } from '@types';
+import { SemanticVariant, SignUpFormFields } from '@types';
 import { useSignUpForm, useSignUpApi, countriesList } from '@features/auth';
 import { getEncryptedValue } from '../_config/utils';
 import { countryCodes } from '@utils';
@@ -14,23 +22,26 @@ const SignUpScreen = () => {
   const [selectedCountry, setSelectedCountry] = React.useState(undefined);
   const [fcmToken, setFcmToken] = React.useState(undefined);
   const { goBack } = useNavigation();
-  const { control, errors, isValidForm, handleSubmit, getValues } =
+  const { control, errors, isValidForm, getValues } =
     useSignUpForm(selectedCountry);
   const { requestSignUp, data, loading } = useSignUpApi(getEncryptedValue);
 
   useEffect(() => {
-    if(data){
-      setFcmToken(undefined);
+    if (data) {
+      setTimeout(() => {
+        goBack();
+      }, 2000);
     }
   }, [data]);
 
   useEffect(() => {
-    if(fcmToken){
+    if (fcmToken) {
       handleSignUp();
     }
   }, [fcmToken]);
 
   const setFCMTokenAfterPermission = async () => {
+    setFcmToken(undefined);
     const token = await tryToGetFCMToken();
     setFcmToken(token);
   };
@@ -73,6 +84,12 @@ const SignUpScreen = () => {
     <Container
       header={
         <>
+          <Banner
+            visible={!!data}
+            variant={SemanticVariant.SUCCESS}
+            message={i18n.t([`accountCreatedSuccessfully`])}
+          />
+          <Loader visible={loading} />
           <Spacer size={'xl'} />
           <Text variant={'headlineMedium'}>{i18n.t('letsSetupAnAccount')}</Text>
         </>

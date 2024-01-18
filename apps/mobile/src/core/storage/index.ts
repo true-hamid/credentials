@@ -2,7 +2,7 @@ import { MMKV } from 'react-native-mmkv';
 
 export const MMKVstorage = new MMKV();
 
-export const Storage = {
+export const AppStorage = {
   saveToStorageValue: (key: string, value: string | boolean | number) => {
     if (typeof value === 'object') {
       value = JSON.stringify(value);
@@ -10,7 +10,7 @@ export const Storage = {
     try {
       MMKVstorage.set(key, value);
     } catch (error) {
-      console.warn(error);
+      console.warn(error.message);
     }
   },
   getString: (key: string) => {

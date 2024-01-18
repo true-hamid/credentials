@@ -8,26 +8,36 @@ export const Menu = ({
   selectedItem,
   onItemSelect,
   anchorStyle,
+  anchor,
+  menuVisible,
+  onCloseMenu,
 }: MenuProps) => {
   const [visible, setVisible] = React.useState(false);
 
-  const openMenu = () => setVisible(true);
+  const openMenu = () => {
+    setVisible(true);
+  };
 
-  const closeMenu = () => setVisible(false);
+  const closeMenu = () => {
+    setVisible(false);
+    onCloseMenu && onCloseMenu();
+  };
 
   return (
     <RNPMenu
-      visible={visible}
+      visible={menuVisible !== undefined ? menuVisible : visible}
       onDismiss={closeMenu}
       anchor={
-        <Button style={anchorStyle} compact onPress={openMenu}>
-          {clickableLabel}
-        </Button>
+        anchor || (
+          <Button style={anchorStyle} compact onPress={openMenu}>
+            {clickableLabel}
+          </Button>
+        )
       }
     >
-      {data?.map((item,index) => (
+      {data?.map((item, index) => (
         <RNPMenu.Item
-          key={index+item.value}
+          key={index + item.value}
           onPress={() => {
             onItemSelect(item.value);
             closeMenu();

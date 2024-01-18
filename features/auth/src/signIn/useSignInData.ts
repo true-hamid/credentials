@@ -1,13 +1,17 @@
 import { useGlobalStore } from '@global-store';
-import { USER_COUNTRY } from '@types';
+import { SignInApiResponse, USER_COUNTRY } from '@types';
+import { StorageKeys } from '@utils';
 
-export const useSignInData = () => {
+export const useSignInData = (
+  saveToStorage: (key: string, country: USER_COUNTRY) => void
+) => {
   // TODO: add any required state mutations here
   const { setSession } = useGlobalStore();
-
+  const onSignIn = (data: SignInApiResponse) => {
+    saveToStorage(StorageKeys.USER_COUNTRY, data.country);
+    setSession(data);
+  };
   return {
-    setDataOnSignIn: (data: { authToken: string, country: USER_COUNTRY }) => {
-      setSession(data);
-    },
+    setDataOnSignIn: onSignIn,
   };
 };

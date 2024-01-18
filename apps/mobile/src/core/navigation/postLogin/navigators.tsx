@@ -1,15 +1,16 @@
 import { Routes } from './routes';
-
-import { AuthStack } from '../../../features/auth/_config/nav/navigator';
 import { AppStack } from '..';
 
-export const PreLoginStack = () => {
+import { DashboardStack } from '../../../features/dashboard/_config/nav/navigator';
+
+
+export const PostLoginStack = () => {
   return (
     <AppStack.Navigator>
       <AppStack.Screen
         options={{ headerShown: false }}
-        name={Routes.ROUTE_AUTH_NAVIGATOR}
-        component={AuthStack}
+        name={Routes.ROUTE_DASHBOARD_NAVIGATOR}
+        component={DashboardStack}
       />
     </AppStack.Navigator>
   );

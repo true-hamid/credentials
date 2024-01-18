@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Strategy } from 'passport-jwt';
@@ -8,6 +8,8 @@ import { User } from '../user/user.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
+    private readonly logger = new Logger(PassportStrategy.name);
+
     constructor(
         @InjectRepository(User)
         private readonly userRepository: Repository<User>
@@ -21,6 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async validate(payload: any) {
+        this.logger.debug(`JWT Strategy validate ${payload.sub}`)
         return await this.userRepository.findOneBy({id: payload.sub});
     }
 }
