@@ -41,7 +41,6 @@ export const ChangeAppLanguage: React.FC = () => {
             />
           </TouchableRipple>
         }
-        clickableLabel={i18n.t('selectCountry')}
       />
     </View>
   );

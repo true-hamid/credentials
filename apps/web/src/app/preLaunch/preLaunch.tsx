@@ -3,7 +3,7 @@ import { useTranslation } from '@localization';
 import { Loader, ThemeProvider } from '@web-ui';
 import { useGlobalStore } from '@global-store';
 import { NetworkProvider } from '@network';
-import APIErrorHandler from '../components/APIErrorHandler';
+import APIErrorHandler from '../components/api-error-handler';
 import { StorageKeys } from '@utils';
 import { USER_COUNTRY } from '@types';
 
@@ -41,12 +41,17 @@ const PreLaunch: React.FC<PreLaunchProps> = ({ children }) => {
 
 const PRE_LAUNCH: React.FC<PreLaunchProps> = ({ children }) => {
   const { ready: isTranslationReady } = useTranslation();
-
+console.log('process.env', process.env);
   if (!isTranslationReady) {
     return null;
   } else {
     return (
-      <NetworkProvider value={{ baseURL: process.env.NX_BASE_URL || '' }}>
+      <NetworkProvider
+        value={{
+          baseURL: process.env.NX_BASE_URL || '',
+          channel: process.env.NX_CHANNEL_NAME,
+        }}
+      >
         <APIErrorHandler />
         {children}
       </NetworkProvider>

@@ -4,6 +4,7 @@ import * as Constants from './constants';
 export const initialState = {
   apiError: {
     errorCode: null,
+    statusCode: null,
   },
   session: {
     authToken: null,
@@ -13,12 +14,16 @@ export const initialState = {
 
 export type GlobalStateApiError = {
   errorCode?: string | null;
+  statusCode?: number | null;
 };
 
 export type GlobalStateSession = {
   authToken?: string | null;
   country?: USER_COUNTRY | null;
 };
+
+export type ActionPayloadTypes = GlobalStateApiError & GlobalStateSession;
+// & null;
 
 export type GlobalStateTypes = {
   apiError?: GlobalStateApiError;
@@ -27,7 +32,7 @@ export type GlobalStateTypes = {
 
 export type ActionTypes = {
   type: string;
-  payload: GlobalStateApiError | GlobalStateSession | null;
+  payload: ActionPayloadTypes;
 };
 
 export default (
@@ -48,7 +53,10 @@ export default (
     case Constants.SET_API_ERROR:
       return {
         ...state,
-        apiError: action.payload,
+        apiError: {
+          errorCode: action.payload?.errorCode,
+          statusCode: action.payload?.statusCode,
+        },
       };
     case Constants.CLEAR_API_ERROR:
       return {

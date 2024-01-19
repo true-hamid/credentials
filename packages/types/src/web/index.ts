@@ -1,9 +1,6 @@
 export type MenuProps = {
-  clickableLabel: string;
   data: { label: string; value: string }[];
+  clickableLabel?: string;
   onItemSelect: (value: string) => void;
-  selectedItem?: string;
-  anchorEl?: HTMLElement;
-  menuVisible?: boolean;
-  onCloseMenu?: () => void;
+  iconAnchor?: React.ReactElement;
 };

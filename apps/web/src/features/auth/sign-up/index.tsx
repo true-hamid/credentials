@@ -96,7 +96,7 @@ export default function SignUp() {
               // @ts-expect-error we are not in the type definition business
               errorMessage={errors?.[SignUpFormFields.NAME]?.message}
               label={i18n.t('name')}
-              helperTextType={'error'}
+              helperTextType={SemanticVariant.ERROR}
               margin="normal"
             />
             <Form.ControlledTextField
@@ -105,7 +105,7 @@ export default function SignUp() {
               // @ts-expect-error we are not in the type definition business
               errorMessage={errors?.[SignUpFormFields.USERNAME]?.message}
               label={i18n.t('username')}
-              helperTextType={'error'}
+              helperTextType={SemanticVariant.ERROR}
               margin="normal"
             />
             <Form.ControlledTextField
@@ -114,7 +114,7 @@ export default function SignUp() {
               // @ts-expect-error we are not in the type definition business
               errorMessage={errors?.[SignUpFormFields.PHONE_NUMBER]?.message}
               label={i18n.t('phoneNumber')}
-              helperTextType={'error'}
+              helperTextType={SemanticVariant.ERROR}
               margin="normal"
               InputProps={{
                 startAdornment: (
@@ -130,7 +130,7 @@ export default function SignUp() {
               // @ts-expect-error we are not in the type definition business
               errorMessage={errors?.[SignUpFormFields.PASSWORD]?.message}
               label={i18n.t('password')}
-              helperTextType={'error'}
+              helperTextType={SemanticVariant.ERROR}
               type="password"
               autoComplete="current-password"
               margin="normal"

@@ -20,6 +20,7 @@ export const useAPIRequest = <Data>(defaultConfig?: AxiosRequestConfig) => {
     baseURL,
     timeout: TIMEOUT,
   });
+  console.log('channel', channel  )
 
   const fixedHeaders: FixedHeaders = {};
   fixedHeaders['channel'] = channel;
@@ -43,6 +44,7 @@ export const useAPIRequest = <Data>(defaultConfig?: AxiosRequestConfig) => {
         setError(error);
         setApiError({
           errorCode: error?.response?.data?.message || 'GENERAL_ERROR',
+          statusCode: error?.response?.status || 500,
         });
       })
       .finally(() => {

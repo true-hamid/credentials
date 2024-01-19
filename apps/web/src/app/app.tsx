@@ -1,5 +1,4 @@
 import PreLaunch from './preLaunch/preLaunch';
-// import AppRouter from '../core/routing';
 import {
   Link,
   Navigate,
@@ -8,7 +7,7 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { GlobalStoreProvider, useGlobalStore } from '@global-store';
-import PreLoginRouter from '../core/routing/pre-login/routers';
+import {AppRouter} from '../core/router';
 import '../core/language/i18next';
 
 export function App() {
@@ -76,7 +75,7 @@ export function App() {
   return (
     <GlobalStoreProvider>
       <PreLaunch>
-        <PreLoginRouter />
+        <AppRouter />
       </PreLaunch>
     </GlobalStoreProvider>
   );

@@ -1,6 +1,6 @@
 import { Controller, UseControllerProps } from 'react-hook-form';
-import { MenuProps } from '@types-web';
 import { Menu } from '../menu';
+import { MenuProps } from '@types-web';
 
 type ControlledMenuProps = MenuProps &
   UseControllerProps & {

@@ -13,10 +13,11 @@ import {
 } from '@web-ui';
 import { i18n } from '@localization';
 import { useAppTheme } from '@theme';
-import { SignInFormFields } from '@types';
+import { SemanticVariant, SignInFormFields } from '@types';
 import { useSignInApi, useSignInForm, useSignInData } from '@features/auth';
 import { getEncrypted } from '../utils';
 import { StorageKeys } from '@utils';
+import { PostLoginPaths } from '../../../core/router/paths';
 
 export default function SignIn() {
   const theme = useAppTheme();
@@ -29,6 +30,7 @@ export default function SignIn() {
     if (data) {
       localStorage.setItem(StorageKeys.USER_COUNTRY, data.country);
       setDataOnSignIn(data);
+      navigate(PostLoginPaths.PATH_DASHBOARD)
     }
   }, [data]);
 
@@ -80,7 +82,7 @@ export default function SignIn() {
               errorMessage={errors?.[SignInFormFields.USERNAME]?.message}
               label={i18n.t('username')}
               value={'hamidab'}
-              helperTextType={'error'}
+              helperTextType={SemanticVariant.ERROR}
             />
             <Form.ControlledTextField
               name={SignInFormFields.PASSWORD}
@@ -88,7 +90,7 @@ export default function SignIn() {
               // @ts-expect-error we are not in the type definition business
               errorMessage={errors?.[SignInFormFields.PASSWORD]?.message}
               label={i18n.t('password')}
-              helperTextType={'error'}
+              helperTextType={SemanticVariant.ERROR}
               type="password"
               value={'Mash123$'}
               autoComplete="current-password"

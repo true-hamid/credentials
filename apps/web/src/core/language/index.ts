@@ -1,1 +1,1 @@
-// export { ChangeAppLanguage } from './ChangeAppLanguage';
+export { ChangeAppLanguage } from './change-app-language';
