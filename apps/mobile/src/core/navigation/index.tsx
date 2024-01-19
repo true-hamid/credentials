@@ -12,11 +12,11 @@ const POST_LOGIN_STACK = 'PostLogin';
 
 // Create your navigation container
 const AppNavigation = () => {
-  const { session } = useGlobalStore();
+  const { session, apiError } = useGlobalStore();
   return (
     <NavigationContainer>
       <AppStack.Navigator>
-        {!session.authToken ? (
+        {!session.authToken || apiError?.statusCode === 401 ? (
           <AppStack.Screen
             options={{ headerShown: false }}
             name={PRE_LOGIN_STACK}

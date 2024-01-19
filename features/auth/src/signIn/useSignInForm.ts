@@ -17,12 +17,6 @@ export const useSignInForm = () => {
       ]),
     });
 
-    useEffect(() => {
-      console.log('FORRM', getValues());
-      console.log('FORRM_errror', errors);
-      console.log('FORRM_isValidForm', isValidForm);
-    }, [getValues()]);
-
   return {
     control,
     handleSubmit,

@@ -39,7 +39,10 @@ export class AuthService {
         privateKeyString
       ),
     };
-    this.deleteCredsAfterSuccessfulDecryption(encrypt);
+    setTimeout(() => {
+      // we are deleting the stored keys after 1 second to make sure the response is sent
+      this.deleteCredsAfterSuccessfulDecryption(encrypt);
+    }, 1000);
     return payload;
   }
 

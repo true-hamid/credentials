@@ -17,7 +17,7 @@ export const Container = ({
   const ViewConatiner = scrollable ? ScrollView : View;
   const containerProps = scrollable
     ? {
-        contentContainerStyle: styles.container,
+        contentContainerStyle: styles.scrollableContainer,
       }
     : {
         style: styles.container,
@@ -32,6 +32,10 @@ export const Container = ({
 };
 
 const styles = StyleSheet.create({
+  scrollableContainer: {
+    padding: 16,
+    justifyContent: 'space-between',
+  },
   container: {
     flex: 1,
     padding: 16,

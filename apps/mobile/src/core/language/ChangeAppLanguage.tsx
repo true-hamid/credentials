@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, I18nManager } from 'react-native';
 import { TouchableRipple } from 'react-native-paper';
+import RNRestart from 'react-native-restart';
 import { i18n } from '@localization';
 import { Menu } from '@native-ui';
 import { StorageKeys } from '@utils';
 import { AppStorage } from '../storage';
+import { LANGUAGE } from '@types';
 
 export const ChangeAppLanguage: React.FC = () => {
   const [languagemenuVisible, setLanguagemenuVisible] = React.useState(false);
@@ -19,6 +21,10 @@ export const ChangeAppLanguage: React.FC = () => {
 
   const onLanguageSelect = (language: string) => {
     AppStorage.saveToStorageValue(StorageKeys.APP_LANG, language);
+    I18nManager.forceRTL(
+      language === LANGUAGE.arAE || language === LANGUAGE.arSD
+    );
+    RNRestart.restart();
   };
 
   return (

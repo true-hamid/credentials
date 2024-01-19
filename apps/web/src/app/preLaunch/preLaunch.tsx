@@ -41,7 +41,7 @@ const PreLaunch: React.FC<PreLaunchProps> = ({ children }) => {
 
 const PRE_LAUNCH: React.FC<PreLaunchProps> = ({ children }) => {
   const { ready: isTranslationReady } = useTranslation();
-console.log('process.env', process.env);
+
   if (!isTranslationReady) {
     return null;
   } else {

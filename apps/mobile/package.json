@@ -32,6 +32,8 @@
     "@react-native-firebase/app": "*",
     "@react-native-firebase/messaging": "*",
     "@react-native-async-storage/async-storage": "*",
-    "react-native-mmkv": "*"
+    "react-native-mmkv": "*",
+    "@mui/material": "*",
+    "react-native-restart": "*"
   }
 }

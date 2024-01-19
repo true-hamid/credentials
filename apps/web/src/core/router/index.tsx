@@ -33,8 +33,9 @@ export function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        {AppRoutes.map(({ path, element, protectedRoute }) => (
+        {AppRoutes.map(({ path, element, protectedRoute }, index) => (
           <Route
+            key={index}
             path={path}
             element={
               protectedRoute ? (

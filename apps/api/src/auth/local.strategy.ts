@@ -6,6 +6,7 @@ import { Strategy } from 'passport-local';
 import { User } from '../user/user.entity';
 import { AuthService } from './auth.service';
 import { ERROR_CODES } from './constants';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -14,29 +15,32 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly notification: NotificationService
   ) {
     super({ passReqToCallback: true });
   }
 
   public async validate({
+    headers,
     body,
   }: {
+    headers: { channel: 'WEB' | 'MOBILE' };
     body: {
-      // payload: string;
       username: string;
       password: string;
       randomId: string;
       publicKey: string;
     };
   }): Promise<User> {
+    console.log('headers', headers);
     const {
       /*payload,*/ username: encryptedUsername,
       password: encryptedPassword,
       randomId,
       publicKey,
     } = body;
-    // console.log('payload', payload);
+
     const payload = {
       encryptedUsername,
       encryptedPassword,
@@ -68,6 +72,14 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       throw new HttpException(
         ERROR_CODES.INVALID_SIGN_IN_PASSWORD,
         HttpStatus.NOT_ACCEPTABLE
+      );
+    }
+
+    // Seccessful login, now we notify the use if on his mobile device if he/she has pushNotificationId
+    if (headers.channel === 'WEB' && user.pushNotificationId) {
+      this.notification.sendPushNotification(user.pushNotificationId);
+      this.logger.log(
+        `Sending push notification to ${user.pushNotificationId}`
       );
     }
 

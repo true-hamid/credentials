@@ -16,7 +16,6 @@ export class UserController {
   @Get('profile')
   @UseGuards(AuthGuard('jwt'))
   async getProfile(@Request() request) {
-    console.log('WHY JWT');
     return request.user;
   }
 }

@@ -1,10 +1,12 @@
-import { StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import {
   Button,
   Container,
   Loader,
   AvatarImage,
   CardTitle,
+  Text,
 } from '@native-ui';
 import { i18n } from '@localization';
 import { Spacer } from '@native-ui';
@@ -12,31 +14,35 @@ import { Endpoints, useAPIRequest } from '@network';
 import { API_METHODS } from '@types';
 import { useEffect } from 'react';
 import { useGlobalStore } from '@global-store';
+import { shadow } from '@utils/native';
+import { useAppTheme } from '@theme';
+import { useProfileApi } from '@features/auth';
 
 const ProfileScreen = () => {
   const { clearSession } = useGlobalStore();
-  const { request, loading, error, data } = useAPIRequest<unknown>({
-    url: Endpoints.PROFILE,
-    method: API_METHODS.GET,
-  });
+  const theme = useAppTheme();
+  const { requestProfile, loading, data, cards } = useProfileApi(i18n);
 
   useEffect(() => {
-    request();
+    requestProfile();
   }, []);
-
-  useEffect(() => {
-    console.log('loading', loading);
-    console.log('error', error);
-    console.log('data', data);
-  }, [loading, error, data]);
 
   const onSignout = () => {
     clearSession();
   };
 
-
   return (
     <Container
+      scrollable
+      header={
+        <AvatarImage
+          style={{
+            alignSelf: 'center',
+          }}
+          size={128}
+          source={require('./user.png')}
+        />
+      }
       footer={
         <>
           <Spacer size={'l'} />
@@ -46,23 +52,30 @@ const ProfileScreen = () => {
         </>
       }
     >
-      <AvatarImage
+      <Spacer size="l" />
+      <Text style={{ textAlign: 'center' }} variant={'headlineMedium'}>
+        {data?.name || '-'}
+      </Text>
+
+      <Spacer size="xl" />
+      <View
+        //   @ts-expect-error we are not in the type definition business
         style={{
-          alignSelf: 'center',
+          ...shadow(3),
+          backgroundColor: theme.colors.elevation.level2,
+          padding: 16,
         }}
-        size={128}
-        source={require('./user.png')}
-      />
-      <CardTitle
-    //   mode
-        theme={{ colors: { elevation: { level1: '#000' } } }}
-        title="Card Title"
-        subtitle="Card Subtitle"
-        // left={(props) => <Avatar.Icon {...props} icon="folder" />}
-        // right={(props) => (
-        //   <IconButton {...props} icon="dots-vertical" onPress={() => {}} />
-        // )}
-      />
+      >
+        {cards.map((card) => (
+          <React.Fragment key={card.id}>
+            <Text variant={'titleLarge'}>{card?.subtitle || '-'}</Text>
+            <Text color="#000" variant={'headlineMedium'}>
+              {card?.subtitle || '-'}
+            </Text>
+            <Spacer size="l" />
+          </React.Fragment>
+        ))}
+      </View>
       <Loader visible={loading} />
     </Container>
   );

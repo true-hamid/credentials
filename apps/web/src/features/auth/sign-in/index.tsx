@@ -4,12 +4,16 @@ import {
   Typography,
   Avatar,
   Box,
-  Container,
   LockOutlinedIcon,
   Button,
   Form,
   CircularProgress,
   Loader,
+  AppBar,
+  Toolbar,
+  Paper,
+  Grid,
+  CssBaseline,
 } from '@web-ui';
 import { i18n } from '@localization';
 import { useAppTheme } from '@theme';
@@ -18,6 +22,7 @@ import { useSignInApi, useSignInForm, useSignInData } from '@features/auth';
 import { getEncrypted } from '../utils';
 import { StorageKeys } from '@utils';
 import { PostLoginPaths } from '../../../core/router/paths';
+import { ChangeAppLanguage } from '../../../core/language';
 
 export default function SignIn() {
   const theme = useAppTheme();
@@ -30,7 +35,7 @@ export default function SignIn() {
     if (data) {
       localStorage.setItem(StorageKeys.USER_COUNTRY, data.country);
       setDataOnSignIn(data);
-      navigate(PostLoginPaths.PATH_DASHBOARD)
+      navigate(PostLoginPaths.PATH_DASHBOARD);
     }
   }, [data]);
 
@@ -47,85 +52,109 @@ export default function SignIn() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-        }}
-      >
-        <Typography component="h2" variant="h4">
-          {i18n.t('welcomeTitles')}
-        </Typography>
-        <Typography component="h2" variant="h5">
-          {i18n.t('signInToContinue')}
-        </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
+    <>
+      <CssBaseline />
+      <AppBar color="primary" position="relative">
+        <Toolbar
+          sx={{ flexDirection: 'row-revesrse', justifyContent: 'flex-end' }}
         >
-          <Avatar sx={{ m: 3, bgcolor: theme.colors.primary }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <ChangeAppLanguage />
+        </Toolbar>
+      </AppBar>
+      <Grid container component="main" sx={{ height: '100vh' }}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage: `url(${theme.backgroundImage})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: (t) =>
+              t.palette.mode === 'light'
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
+            sx={{
+              marginTop: 16,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
           >
-            <Form.ControlledTextField
-              name={SignInFormFields.USERNAME}
-              control={control}
-              // @ts-expect-error we are not in the type definition business
-              errorMessage={errors?.[SignInFormFields.USERNAME]?.message}
-              label={i18n.t('username')}
-              value={'hamidab'}
-              helperTextType={SemanticVariant.ERROR}
-            />
-            <Form.ControlledTextField
-              name={SignInFormFields.PASSWORD}
-              control={control}
-              // @ts-expect-error we are not in the type definition business
-              errorMessage={errors?.[SignInFormFields.PASSWORD]?.message}
-              label={i18n.t('password')}
-              helperTextType={SemanticVariant.ERROR}
-              type="password"
-              value={'Mash123$'}
-              autoComplete="current-password"
-              margin="normal"
-            />
-            <Box sx={{ position: 'relative' }}>
-              <Button
-                disabled={!isValidForm}
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                {i18n.t('signIn')}
+            <Typography component="h2" variant="h4">
+              {i18n.t('welcomeTitles')}
+            </Typography>
+            <Typography component="h2" variant="h5">
+              {i18n.t('signInToContinue')}
+            </Typography>
+            <Avatar sx={{ m: 3, bgcolor: theme.colors.primary }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
+              <Form.ControlledTextField
+                name={SignInFormFields.USERNAME}
+                control={control}
+                // @ts-expect-error we are not in the type definition business
+                errorMessage={errors?.[SignInFormFields.USERNAME]?.message}
+                label={i18n.t('username')}
+                value={'hamidab'}
+                helperTextType={SemanticVariant.ERROR}
+              />
+              <Form.ControlledTextField
+                name={SignInFormFields.PASSWORD}
+                control={control}
+                // @ts-expect-error we are not in the type definition business
+                errorMessage={errors?.[SignInFormFields.PASSWORD]?.message}
+                label={i18n.t('password')}
+                helperTextType={SemanticVariant.ERROR}
+                type="password"
+                value={'Mash123$'}
+                autoComplete="current-password"
+                margin="normal"
+              />
+              <Box sx={{ position: 'relative' }}>
+                <Button
+                  disabled={!isValidForm}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  {i18n.t('signIn')}
+                </Button>
+                {loading && (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      marginTop: '-12px',
+                      marginLeft: '-12px',
+                    }}
+                  />
+                )}
+              </Box>
+              <Button onClick={onSignUpClick} variant="outlined" fullWidth>
+                {i18n.t('signUp')}
               </Button>
-              {loading && (
-                <CircularProgress
-                  size={24}
-                  sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    marginTop: '-12px',
-                    marginLeft: '-12px',
-                  }}
-                />
-              )}
+              <Loader visible={loading} />
             </Box>
-            <Button onClick={onSignUpClick} variant="outlined" fullWidth>
-              {i18n.t('signUp')}
-            </Button>
-            <Loader visible={loading} />
           </Box>
-        </Box>
-      </Box>
-    </Container>
+        </Grid>
+      </Grid>
+    </>
   );
 }

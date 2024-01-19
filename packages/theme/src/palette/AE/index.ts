@@ -25,6 +25,7 @@ const AE = {
     },
   },
   // add other theme specific variables here
+  backgroundImage: 'https://wallpapercosmos.com/w/middle-retina/6/3/b/1403821-3840x2160-desktop-4k-dubai-skyline-wallpaper-image.jpg',
 };
 
 export default AE;

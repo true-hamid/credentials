@@ -23,8 +23,9 @@ const IN = {
         background: amber[50],
       },
     },
-  }
+  },
   // add other theme specific variables here
+  backgroundImage: 'https://wallpapercosmos.com/w/middle-retina/1/e/0/777150-3840x2160-desktop-4k-the-taj-mahal-wallpaper-image.jpg',
 };
 
 export default IN;

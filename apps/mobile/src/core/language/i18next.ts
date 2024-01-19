@@ -10,9 +10,6 @@ import { LANGUAGE } from '@types';
 const language =
   AppStorage.getString(StorageKeys.APP_LANG) || config.DEFAULT_APP_LANGUAGE;
 if (language) {
-  if (language === LANGUAGE.arAE || language === LANGUAGE.arSD) {
-    I18nManager.forceRTL(true);
-  }
   i18n
     .use(Backend)
     .use(initReactI18next)

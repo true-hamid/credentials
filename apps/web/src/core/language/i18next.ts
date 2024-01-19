@@ -7,7 +7,7 @@ import { LANGUAGE } from '@types';
 const language =
   localStorage.getItem(StorageKeys.APP_LANG) ||
   process.env.NX_LOCALE_DEFAULT_LOCALE;
-console.log('language', language);
+
 if (language) {
   if (language === LANGUAGE.arAE || language === LANGUAGE.arSD) {
     document.body.setAttribute('dir', 'rtl');

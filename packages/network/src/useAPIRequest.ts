@@ -20,7 +20,6 @@ export const useAPIRequest = <Data>(defaultConfig?: AxiosRequestConfig) => {
     baseURL,
     timeout: TIMEOUT,
   });
-  console.log('channel', channel  )
 
   const fixedHeaders: FixedHeaders = {};
   fixedHeaders['channel'] = channel;

@@ -3,6 +3,7 @@ import { Routes } from './routes';
 
 import SignInScreen from '../../signIn/SignInScreen';
 import SignUpScreen from '../../signUp/SignUpScreen';
+import { ChangeAppLanguage } from '../../../../core/language';
 
 const Stack = createNativeStackNavigator();
 
@@ -10,12 +11,18 @@ export function AuthStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        options={{ headerShown: false }}
+        options={{
+          headerRight: () => <ChangeAppLanguage />,
+          headerTitle: '',
+        }}
         name={Routes.ROUTE_SIGN_IN}
         component={SignInScreen}
       />
       <Stack.Screen
-        options={{ headerShown: false }}
+        options={{
+          headerRight: () => <ChangeAppLanguage />,
+          headerTitle: '',
+        }}
         name={Routes.ROUTE_SIGN_UP}
         component={SignUpScreen}
       />

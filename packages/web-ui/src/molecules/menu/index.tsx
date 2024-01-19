@@ -10,6 +10,7 @@ export const Menu = ({
   clickableLabel,
   onItemSelect,
   iconAnchor,
+  sx,
 }: MenuProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -46,6 +47,7 @@ export const Menu = ({
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
+        sx={sx}
         onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',

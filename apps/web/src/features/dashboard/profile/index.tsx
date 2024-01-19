@@ -13,60 +13,23 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useAppTheme } from '@theme';
-import { Endpoints, useAPIRequest } from '@network';
-import { API_METHODS, USER_COUNTRY } from '@types';
-import { i18n } from '@localization';
-import { countryCodes } from '@utils';
 import { useGlobalStore } from '@global-store';
-import { ChangeAppLanguage } from '../../../core/language';
 import { IconButton } from '@mui/material';
+import { useProfileApi } from '@features/auth';
+import { i18n } from '@localization';
 
 export function Profile() {
   const theme = useAppTheme();
   const { clearSession } = useGlobalStore();
-  const { request, loading, error, data } = useAPIRequest<{
-    name: string;
-    username: string;
-    phoneNumber: string;
-    country: string;
-  }>({
-    url: Endpoints.PROFILE,
-    method: API_METHODS.GET,
-  });
+  const { requestProfile, loading, data, cards } = useProfileApi(i18n);
 
   useEffect(() => {
-    request();
+    requestProfile();
   }, []);
-
-  useEffect(() => {
-    console.log('loading', loading);
-    console.log('error', error);
-    console.log('data', data);
-  }, [loading, error, data]);
 
   const onSignout = () => {
     clearSession();
   };
-
-  const cards = [
-    {
-      id: 1,
-      title: i18n.t('username') || '-',
-      subtitle: data?.username || '-',
-    },
-    {
-      id: 2,
-      title: i18n.t('phoneNumber') || '-',
-      subtitle:
-        (countryCodes?.[data?.country as USER_COUNTRY] || '') +
-          data?.phoneNumber || '-',
-    },
-    {
-      id: 3,
-      title: i18n.t('country') || '-',
-      subtitle: data?.country ? i18n.t('country' + data?.country) : '' || '-',
-    },
-  ];
 
   return (
     <Box
@@ -77,13 +40,12 @@ export function Profile() {
       }}
     >
       <CssBaseline />
-      <AppBar color="default" position="relative">
+      <AppBar color="primary" position="relative">
         <Toolbar
           sx={{ flexDirection: 'row-revesrse', justifyContent: 'flex-end' }}
         >
-          <ChangeAppLanguage />
           <IconButton sx={{ mx: 2 }} id="basic-button" onClick={onSignout}>
-            <LogoutIcon />
+            <LogoutIcon style={{color: 'white'}} />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -137,7 +99,7 @@ export function Profile() {
           </Grid>
         </Container>
       </main>
-      <Loader visible={false} />
+      <Loader visible={loading} />
     </Box>
   );
 }

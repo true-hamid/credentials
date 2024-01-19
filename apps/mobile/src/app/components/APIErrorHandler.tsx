@@ -1,23 +1,14 @@
-import { useEffect } from 'react';
-import { useGlobalStore } from '@global-store';
 import { i18n } from '@localization';
 import { Banner } from '@native-ui';
 import { SemanticVariant } from '@types';
+import { useApiErrorHandler } from '@network';
 
 const APIErrorHandler = () => {
-  const VISIBILITY_TIMEOUT = 5000;
-  const { apiError, clearApiError } = useGlobalStore();
+  const {showError, apiError} = useApiErrorHandler()
 
-  useEffect(() => {
-    if (apiError.errorCode) {
-      setTimeout(() => {
-        clearApiError();
-      }, VISIBILITY_TIMEOUT);
-    }
-  }, [apiError.errorCode]);
 
   return (
-    apiError.errorCode && (
+    showError && (
       <Banner
         visible
         variant={SemanticVariant.ERROR}

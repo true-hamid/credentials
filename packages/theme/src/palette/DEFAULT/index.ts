@@ -25,6 +25,7 @@ const DEFAULT = {
     },
   },
   // add other theme specific variables here
+  backgroundImage: 'https://source.unsplash.com/random?wallpapers',
 };
 
 export default DEFAULT;

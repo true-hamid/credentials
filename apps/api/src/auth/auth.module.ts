@@ -6,6 +6,7 @@ import { LocalStrategy } from './local.strategy';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { Encrypt } from './ecrypt.entity';
+import { NotificationService } from '../notification/notification.service';
 
 @Module({
   imports: [
@@ -14,11 +15,11 @@ import { Encrypt } from './ecrypt.entity';
     JwtModule.registerAsync({
       useFactory: () => ({
         secret: process.env.NX_JWT_SECRET,
-        signOptions: { expiresIn: '180s' },
+        signOptions: { expiresIn: '300s' },
       }),
     }),
   ],
   controllers: [AuthController],
-  providers: [LocalStrategy, AuthService],
+  providers: [LocalStrategy, AuthService, NotificationService],
 })
 export class AuthModule {}

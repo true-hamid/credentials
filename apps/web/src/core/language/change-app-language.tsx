@@ -25,7 +25,7 @@ export const ChangeAppLanguage: React.FC = () => {
     <Menu
       data={appLanguages}
       onItemSelect={onLanguageSelect}
-      iconAnchor={<TranslateIcon/>}
+      iconAnchor={<TranslateIcon style={{color: '#fff'}} />}
     />
   );
 };

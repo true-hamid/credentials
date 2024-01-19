@@ -30,9 +30,7 @@ const getCountrySpecificRegexs = (
   field: SignUpFormFields.USERNAME | SignUpFormFields.PHONE_NUMBER,
   country?: USER_COUNTRY
 ) => {
-  const v = countrySpecificRegexsMap[field]?.[country || 'DEFAULT'];
-  console.log('v', v);
-  return v;
+  return countrySpecificRegexsMap[field]?.[country || 'DEFAULT'];
 };
 
 export const getFormValidations = (

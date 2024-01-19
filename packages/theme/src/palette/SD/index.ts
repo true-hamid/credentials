@@ -23,8 +23,9 @@ const SD = {
         background: amber[50],
       },
     },
-  }
+  },
   // add other theme specific variables here
+  backgroundImage: 'https://wallpapercosmos.com/w/middle-retina/2/2/b/1582287-2000x1125-desktop-hd-khartoum-sudan-wallpaper-image.jpg',
 };
 
 export default SD;

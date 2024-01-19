@@ -54,7 +54,9 @@
     },
     "pod-install": {
       "executor": "@nx/react-native:pod-install",
-      "options": {}
+      "options": {
+        "repoUpdate": true
+      }
     },
     "bundle-android": {
       "executor": "@nx/react-native:bundle",

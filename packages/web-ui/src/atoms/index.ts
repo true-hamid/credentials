@@ -8,4 +8,6 @@ export { default as CircularProgress } from '@mui/material/CircularProgress';
 export { default as InputAdornment } from '@mui/material/InputAdornment';
 export { default as AppBar } from '@mui/material/AppBar';
 export { default as Toolbar } from '@mui/material/Toolbar';
-
+export { default as CssBaseline } from '@mui/material/CssBaseline';
+export { default as Grid } from '@mui/material/Grid';
+export { default as Paper } from '@mui/material/Paper';

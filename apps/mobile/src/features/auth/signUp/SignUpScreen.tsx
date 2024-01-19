@@ -25,6 +25,7 @@ const SignUpScreen = () => {
   const { control, errors, isValidForm, getValues } =
     useSignUpForm(selectedCountry);
   const { requestSignUp, data, loading } = useSignUpApi(getEncryptedValue);
+  const countries = countriesList(i18n);
 
   useEffect(() => {
     if (data) {
@@ -117,7 +118,7 @@ const SignUpScreen = () => {
           name={SignUpFormFields.COUNTRY}
           control={control}
           anchorStyle={{ width: '50%', alignItems: 'flex-start' }}
-          data={countriesList}
+          data={countries}
           onItemSelect={setSelectedCountry}
           clickableLabel={i18n.t('selectCountry')}
         />
