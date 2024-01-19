@@ -16,7 +16,7 @@ import { useEffect } from 'react';
 import { useGlobalStore } from '@global-store';
 import { shadow } from '@utils/native';
 import { useAppTheme } from '@theme';
-import { useProfileApi } from '@features/auth';
+import { useProfileApi } from '@features/dashboard';
 
 const ProfileScreen = () => {
   const { clearSession } = useGlobalStore();

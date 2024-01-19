@@ -15,7 +15,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useAppTheme } from '@theme';
 import { useGlobalStore } from '@global-store';
 import { IconButton } from '@mui/material';
-import { useProfileApi } from '@features/auth';
+import { useProfileApi } from '@features/dashboard';
 import { i18n } from '@localization';
 
 export function Profile() {
@@ -91,7 +91,7 @@ export function Profile() {
         <Container sx={{ py: 4 }} maxWidth="lg">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
+            {cards.map((card: {id: number, title: string, subtitle: string}) => (
               <Grid item key={card.id} xs={12} sm={6} md={4}>
                 <Card.Title title={card.title} subtitle={card.subtitle} />
               </Grid>
