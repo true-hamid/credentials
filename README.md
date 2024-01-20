@@ -79,7 +79,8 @@ Below are the steps to run the project locally, I'll working on setting up a rem
 	- DB name: credentials
 	- Collation: utf8_unicode_520_ci
 	- Flow the video below for help on this step
-![DB Setup](repo/db_setup.gif)
+    
+    ![DB Setup](repo/db_setup.gif)
 	 
 ## 3. Running the system
 Run all of the following commands from the root of the project
