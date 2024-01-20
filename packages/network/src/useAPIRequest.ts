@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import NetworkContext from './NetworkContext';
 import { useGlobalStore } from '@global-store';
@@ -29,27 +29,30 @@ export const useAPIRequest = <Data>(defaultConfig?: AxiosRequestConfig) => {
 
   AxiosInstance.defaults.headers.common = fixedHeaders;
 
-  const request = (requestConfig?: AxiosRequestConfig): void => {
-    setData(null);
-    setError(null);
-    setLoading(true);
-    AxiosInstance.request({ ...defaultConfig, ...requestConfig })
-      .then((response: AxiosResponse<Data>) => {
-        console.log('REQ_response', response);
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.log('REQ_error', error);
-        setError(error);
-        setApiError({
-          errorCode: error?.response?.data?.message || 'GENERAL_ERROR',
-          statusCode: error?.response?.status || 500,
+  const request = useCallback(
+    (requestConfig?: AxiosRequestConfig): void => {
+      setData(null);
+      setError(null);
+      setLoading(true);
+      AxiosInstance.request({ ...defaultConfig, ...requestConfig })
+        .then((response: AxiosResponse<Data>) => {
+          console.log('REQ_response', response);
+          setData(response.data);
+        })
+        .catch((error) => {
+          console.log('REQ_error', error);
+          setError(error);
+          setApiError({
+            errorCode: error?.response?.data?.message || 'GENERAL_ERROR',
+            statusCode: error?.response?.status || 500,
+          });
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
+    },
+    [AxiosInstance, defaultConfig, setApiError]
+  );
 
   return {
     request,

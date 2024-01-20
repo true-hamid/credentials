@@ -68,7 +68,7 @@ const ProfileScreen = () => {
       >
         {cards.map((card) => (
           <React.Fragment key={card.id}>
-            <Text variant={'titleLarge'}>{card?.subtitle || '-'}</Text>
+            <Text variant={'titleLarge'}>{card?.title || '-'}</Text>
             <Text color="#000" variant={'headlineMedium'}>
               {card?.subtitle || '-'}
             </Text>

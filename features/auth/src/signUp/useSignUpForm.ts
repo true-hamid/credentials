@@ -26,7 +26,13 @@ export const useSignUpForm = (country?: USER_COUNTRY) => {
   useEffect(() => {
     if (country) {
       setValidationSchema(() => getFormValidations({ t: i18n.t, country }));
-      reset({ [SignUpFormFields.COUNTRY]: country });
+      reset({
+        [SignUpFormFields.COUNTRY]: country,
+        [SignUpFormFields.NAME]: '',
+        [SignUpFormFields.USERNAME]: '',
+        [SignUpFormFields.PHONE_NUMBER]: '',
+        [SignUpFormFields.PASSWORD]: '',
+      });
     }
   }, [country]);
 

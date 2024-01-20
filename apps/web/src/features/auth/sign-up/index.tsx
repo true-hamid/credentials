@@ -137,7 +137,7 @@ export default function SignUp() {
                 helperTextType={SemanticVariant.ERROR}
                 margin="normal"
               />
-              {/* <Form.ControlledTextField
+              <Form.ControlledTextField
                 name={SignUpFormFields.PHONE_NUMBER}
                 control={control}
                 // @ts-expect-error we are not in the type definition business
@@ -152,7 +152,7 @@ export default function SignUp() {
                     </InputAdornment>
                   ),
                 }}
-              /> */}
+              />
               <Form.ControlledTextField
                 name={SignUpFormFields.PASSWORD}
                 control={control}
